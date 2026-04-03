@@ -12,7 +12,7 @@ sudo $HOME/go/bin/go-pcap2socks
 
 tsu -c "$HOME/go/bin/go-pcap2socks"
 ```
-Для установки пропишите(кто установил git):
+Для установки пропишите(кто установил git, оно установит все версии):
 ```
 git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks"
 ```
