@@ -1,0 +1,14 @@
+Сначала go-pcap2socks, потом zapret
+Стратегию zapret рекомендую использовать ALT12 т.к. эта стратегия отлично справляется с Roblox
+# Debian/Ubuntu
+sudo apt install libpcap-dev
+
+# Fedora/RHEL
+sudo dnf install libpcap-devel
+
+# Arch
+sudo pacman -S libpcap
+
+# Alpine
+sudo apk add libpcap-dev
+БИБЛИОТЕКИ НУЖНЫ!!!

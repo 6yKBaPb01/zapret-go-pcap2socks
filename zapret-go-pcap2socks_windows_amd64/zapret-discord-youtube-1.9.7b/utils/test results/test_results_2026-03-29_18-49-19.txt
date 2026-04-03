@@ -1,0 +1,591 @@
+﻿
+Config: general (ALT).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 82 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 87 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 77 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 70 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 186 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 203 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 188 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 84 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 107 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 88 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 70 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 113 ms
+  CloudflareDNS1111 :  | Ping: 71 ms
+  CloudflareDNS1001 :  | Ping: 77 ms
+  GoogleDNS8888 :  | Ping: 84 ms
+  GoogleDNS8844 :  | Ping: 109 ms
+  Quad9DNS9999 :  | Ping: 96 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 104 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 102 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 139 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 131 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 113 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 112 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 103 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT2).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 126 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 128 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 125 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 185 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 187 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 187 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 110 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 89 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 92 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 61 ms
+  CloudflareCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 59 ms
+  CloudflareDNS1111 :  | Ping: 85 ms
+  CloudflareDNS1001 :  | Ping: 70 ms
+  GoogleDNS8888 :  | Ping: 85 ms
+  GoogleDNS8844 :  | Ping: 86 ms
+  Quad9DNS9999 :  | Ping: 97 ms
+  Roblox : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 94 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 89 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 87 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 110 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 102 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 96 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 110 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT3).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 59 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 65 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 71 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 58 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 164 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 176 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 170 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 70 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 68 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 70 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 57 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 56 ms
+  CloudflareDNS1111 :  | Ping: 60 ms
+  CloudflareDNS1001 :  | Ping: 63 ms
+  GoogleDNS8888 :  | Ping: 69 ms
+  GoogleDNS8844 :  | Ping: 71 ms
+  Quad9DNS9999 :  | Ping: 76 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 99 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 97 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 96 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 94 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 99 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 96 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 100 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT4).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 65 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 56 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 55 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 61 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 175 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 180 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 177 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 70 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 70 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 62 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 47 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  CloudflareDNS1111 :  | Ping: 52 ms
+  CloudflareDNS1001 :  | Ping: 54 ms
+  GoogleDNS8888 :  | Ping: 70 ms
+  GoogleDNS8844 :  | Ping: 75 ms
+  Quad9DNS9999 :  | Ping: 77 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 186 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 89 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 90 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 99 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 93 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 90 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 96 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT5).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 56 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 56 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 56 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 165 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 173 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 170 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 71 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 56 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 53 ms
+  CloudflareDNS1111 :  | Ping: 55 ms
+  CloudflareDNS1001 :  | Ping: 55 ms
+  GoogleDNS8888 :  | Ping: 68 ms
+  GoogleDNS8844 :  | Ping: 78 ms
+  Quad9DNS9999 :  | Ping: 89 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 118 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 92 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 91 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 100 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 116 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 101 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 102 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT6).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 65 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 59 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 70 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 171 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 187 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 178 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 79 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 88 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 96 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 48 ms
+  CloudflareCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 95 ms
+  CloudflareDNS1111 :  | Ping: 65 ms
+  CloudflareDNS1001 :  | Ping: 64 ms
+  GoogleDNS8888 :  | Ping: 89 ms
+  GoogleDNS8844 :  | Ping: 90 ms
+  Quad9DNS9999 :  | Ping: 93 ms
+  Roblox : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 87 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 85 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 86 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 87 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 94 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 95 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 97 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT7).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 52 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 65 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 53 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 172 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 173 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 79 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 92 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 83 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 82 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 108 ms
+  CloudflareDNS1111 :  | Ping: 53 ms
+  CloudflareDNS1001 :  | Ping: 55 ms
+  GoogleDNS8888 :  | Ping: 76 ms
+  GoogleDNS8844 :  | Ping: 79 ms
+  Quad9DNS9999 :  | Ping: 96 ms
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 94 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 84 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 122 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 127 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 104 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 116 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT8).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 57 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 58 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 67 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 178 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 202 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 180 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 71 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 75 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 72 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 62 ms
+  CloudflareCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 102 ms
+  CloudflareDNS1111 :  | Ping: 70 ms
+  CloudflareDNS1001 :  | Ping: 70 ms
+  GoogleDNS8888 :  | Ping: 80 ms
+  GoogleDNS8844 :  | Ping: 81 ms
+  Quad9DNS9999 :  | Ping: 78 ms
+  Roblox : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 124 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 114 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 122 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 116 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 124 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 132 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 166 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT9).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 97 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 91 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 127 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 97 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 258 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 195 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 280 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 140 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 187 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 125 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 130 ms
+  CloudflareDNS1111 :  | Ping: 124 ms
+  CloudflareDNS1001 :  | Ping: 126 ms
+  GoogleDNS8888 :  | Ping: 120 ms
+  GoogleDNS8844 :  | Ping: 135 ms
+  Quad9DNS9999 :  | Ping: 80 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 109 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 106 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 111 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 116 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 119 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 122 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 107 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT10).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 202 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 310 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 218 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 284 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 372 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 339 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 674 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 391 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 225 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 390 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 214 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 363 ms
+  CloudflareDNS1111 :  | Ping: 315 ms
+  CloudflareDNS1001 :  | Ping: 385 ms
+  GoogleDNS8888 :  | Ping: Timeout
+  GoogleDNS8844 :  | Ping: 261 ms
+  Quad9DNS9999 :  | Ping: 357 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 181 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 372 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 332 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 365 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 329 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 216 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 142 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (ALT11).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 63 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 58 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 64 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 63 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 182 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 186 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 212 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 151 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 99 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 196 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 62 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 110 ms
+  CloudflareDNS1111 :  | Ping: 60 ms
+  CloudflareDNS1001 :  | Ping: 64 ms
+  GoogleDNS8888 :  | Ping: 105 ms
+  GoogleDNS8844 :  | Ping: 88 ms
+  Quad9DNS9999 :  | Ping: 92 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 192 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 117 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 101 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 101 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 96 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 116 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 116 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (FAKE TLS AUTO ALT).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 234 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 226 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 226 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 360 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 444 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 356 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 360 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 229 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 309 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 328 ms
+  CloudflareCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 506 ms
+  CloudflareDNS1111 :  | Ping: 156 ms
+  CloudflareDNS1001 :  | Ping: 145 ms
+  GoogleDNS8888 :  | Ping: 211 ms
+  GoogleDNS8844 :  | Ping: 127 ms
+  Quad9DNS9999 :  | Ping: 133 ms
+  Roblox : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 282 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 335 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 289 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 160 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 221 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 278 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 208 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (FAKE TLS AUTO ALT2).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 931 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 929 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 932 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 1 066 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 1 063 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 1 071 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 1 075 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 282 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 429 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 216 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:ERROR TLS1.3:UNSUP | Ping: 206 ms
+  CloudflareDNS1111 :  | Ping: 738 ms
+  CloudflareDNS1001 :  | Ping: 537 ms
+  GoogleDNS8888 :  | Ping: 530 ms
+  GoogleDNS8844 :  | Ping: 275 ms
+  Quad9DNS9999 :  | Ping: 613 ms
+  Roblox : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 183 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 104 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 105 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 317 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 98 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 129 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 111 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (FAKE TLS AUTO ALT3).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 58 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 53 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 56 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 58 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 165 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 165 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 168 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 53 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 94 ms
+  CloudflareDNS1111 :  | Ping: 57 ms
+  CloudflareDNS1001 :  | Ping: 53 ms
+  GoogleDNS8888 :  | Ping: 65 ms
+  GoogleDNS8844 :  | Ping: 70 ms
+  Quad9DNS9999 :  | Ping: 72 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 173 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 81 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 93 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 91 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 95 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 102 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 96 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (FAKE TLS AUTO).bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 64 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 63 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 53 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 162 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 167 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 169 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 167 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 52 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 66 ms
+  CloudflareDNS1111 :  | Ping: 51 ms
+  CloudflareDNS1001 :  | Ping: 57 ms
+  GoogleDNS8888 :  | Ping: 67 ms
+  GoogleDNS8844 :  | Ping: 77 ms
+  Quad9DNS9999 :  | Ping: 121 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 204 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 132 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 84 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 96 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 98 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 91 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 388 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (SIMPLE FAKE ALT).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 52 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 52 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 53 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 52 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 186 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 186 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 177 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 67 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 173 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 52 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 55 ms
+  CloudflareDNS1111 :  | Ping: 53 ms
+  CloudflareDNS1001 :  | Ping: 51 ms
+  GoogleDNS8888 :  | Ping: 68 ms
+  GoogleDNS8844 :  | Ping: 70 ms
+  Quad9DNS9999 :  | Ping: 71 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 176 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 93 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 92 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 108 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 94 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 92 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 103 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (SIMPLE FAKE ALT2).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 53 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 54 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 60 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 52 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 207 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 216 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 201 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 192 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 126 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 181 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 77 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 103 ms
+  CloudflareDNS1111 :  | Ping: 72 ms
+  CloudflareDNS1001 :  | Ping: 106 ms
+  GoogleDNS8888 :  | Ping: 94 ms
+  GoogleDNS8844 :  | Ping: 92 ms
+  Quad9DNS9999 :  | Ping: 91 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 191 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 95 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 102 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 97 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 107 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 121 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 162 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general (SIMPLE FAKE).bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 70 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 62 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 83 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 68 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 176 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 203 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 187 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 170 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 95 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 213 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 95 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 112 ms
+  CloudflareDNS1111 :  | Ping: 89 ms
+  CloudflareDNS1001 :  | Ping: 103 ms
+  GoogleDNS8888 :  | Ping: 109 ms
+  GoogleDNS8844 :  | Ping: 130 ms
+  Quad9DNS9999 :  | Ping: 96 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 288 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 119 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 105 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 131 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 119 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 139 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 129 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: general.bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 52 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 57 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 51 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 163 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 168 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 162 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 82 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 170 ms
+  CloudflareWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 77 ms
+  CloudflareCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 95 ms
+  CloudflareDNS1111 :  | Ping: 52 ms
+  CloudflareDNS1001 :  | Ping: 53 ms
+  GoogleDNS8888 :  | Ping: 66 ms
+  GoogleDNS8844 :  | Ping: 71 ms
+  Quad9DNS9999 :  | Ping: 70 ms
+  Roblox : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 94 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 90 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 91 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 100 ms
+  RawGitHub : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 101 ms
+  OBS : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 107 ms
+  PKG : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 114 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: nothing.bat (Type: standard)
+  UNKNOWN : HTTP:ERROR | Ping: Timeout
+  DiscordGateway : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 58 ms
+  DiscordCDN : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 53 ms
+  DiscordUpdates : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 59 ms
+  YouTubeWeb : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 162 ms
+  YouTubeShort : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 174 ms
+  YouTubeImage : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 167 ms
+  YouTubeVideoRedirect : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 162 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 99 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 171 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 55 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 55 ms
+  CloudflareDNS1111 :  | Ping: 53 ms
+  CloudflareDNS1001 :  | Ping: 55 ms
+  GoogleDNS8888 :  | Ping: 69 ms
+  GoogleDNS8844 :  | Ping: 75 ms
+  Quad9DNS9999 :  | Ping: 72 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 188 ms
+  Roblox_Auth : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 91 ms
+  Roblox_Ecomony : HTTP:ERROR TLS1.2:ERROR TLS1.3:UNSUP | Ping: 87 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 93 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 101 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 110 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 100 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+Config: RoFIx.bat (Type: standard)
+  DiscordMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 53 ms
+  DiscordGateway : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 52 ms
+  DiscordCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 55 ms
+  DiscordUpdates : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 51 ms
+  YouTubeWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 163 ms
+  YouTubeShort : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 173 ms
+  YouTubeImage : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 169 ms
+  YouTubeVideoRedirect : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 162 ms
+  GoogleMain : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 69 ms
+  GoogleGstatic : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 216 ms
+  CloudflareWeb : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 152 ms
+  CloudflareCDN : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 127 ms
+  CloudflareDNS1111 :  | Ping: 145 ms
+  CloudflareDNS1001 :  | Ping: 111 ms
+  GoogleDNS8888 :  | Ping: 86 ms
+  GoogleDNS8844 :  | Ping: 148 ms
+  Quad9DNS9999 :  | Ping: 120 ms
+  Roblox : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 83 ms
+  Roblox_Auth : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 93 ms
+  Roblox_Ecomony : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 84 ms
+  GitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 91 ms
+  RawGitHub : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 92 ms
+  OBS : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 100 ms
+  PKG : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: 97 ms
+  PlayStation : HTTP:OK    TLS1.2:OK    TLS1.3:UNSUP | Ping: Timeout
+
+=== ANALYTICS ===
+general (ALT11).bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 24, Fail: 1
+general (ALT3).bat : HTTP OK: 36, ERR: 4, UNSUP: 20, Ping OK: 24, Fail: 1
+general (FAKE TLS AUTO).bat : HTTP OK: 28, ERR: 11, UNSUP: 19, Ping OK: 23, Fail: 2
+general (ALT6).bat : HTTP OK: 8, ERR: 31, UNSUP: 19, Ping OK: 23, Fail: 2
+general (ALT5).bat : HTTP OK: 26, ERR: 13, UNSUP: 19, Ping OK: 23, Fail: 2
+general (SIMPLE FAKE ALT).bat : HTTP OK: 32, ERR: 8, UNSUP: 20, Ping OK: 24, Fail: 1
+general (FAKE TLS AUTO ALT3).bat : HTTP OK: 38, ERR: 2, UNSUP: 20, Ping OK: 24, Fail: 1
+RoFIx.bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 24, Fail: 1
+general (ALT10).bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 23, Fail: 2
+general (FAKE TLS AUTO ALT).bat : HTTP OK: 8, ERR: 31, UNSUP: 19, Ping OK: 23, Fail: 2
+nothing.bat : HTTP OK: 20, ERR: 19, UNSUP: 19, Ping OK: 23, Fail: 2
+general.bat : HTTP OK: 8, ERR: 31, UNSUP: 19, Ping OK: 23, Fail: 2
+general (ALT7).bat : HTTP OK: 18, ERR: 20, UNSUP: 18, Ping OK: 22, Fail: 3
+general (ALT4).bat : HTTP OK: 32, ERR: 8, UNSUP: 20, Ping OK: 24, Fail: 1
+general (FAKE TLS AUTO ALT2).bat : HTTP OK: 9, ERR: 30, UNSUP: 19, Ping OK: 23, Fail: 2
+general (ALT2).bat : HTTP OK: 8, ERR: 31, UNSUP: 19, Ping OK: 23, Fail: 2
+general (ALT8).bat : HTTP OK: 8, ERR: 31, UNSUP: 19, Ping OK: 23, Fail: 2
+general (ALT9).bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 24, Fail: 1
+general (ALT).bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 24, Fail: 1
+general (SIMPLE FAKE).bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 24, Fail: 1
+general (SIMPLE FAKE ALT2).bat : HTTP OK: 40, ERR: 0, UNSUP: 20, Ping OK: 24, Fail: 1
+Best strategy: general (ALT11).bat
