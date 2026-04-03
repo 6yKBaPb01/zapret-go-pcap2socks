@@ -4,14 +4,17 @@ zapret-go-pcap2socks - проект, который состоит из прое
 ```
 pkg update
 pkg install root-repo
-pkg install golang libpcap tsu
+pkg install git golang libpcap tsu
 
 go install github.com/DaniilSokolyuk/go-pcap2socks@latest
 
 sudo $HOME/go/bin/go-pcap2socks
-
+```
+или
+```
 tsu -c "$HOME/go/bin/go-pcap2socks"
 ```
+Далее включите VPN любой или скачайте [zapret от bol-van](https://github.com/bol-van/zapret)
 Для установки пропишите(кто установил git, оно установит все версии):
 ```
 git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks"
