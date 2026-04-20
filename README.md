@@ -4,6 +4,7 @@ zapret-go-pcap2socks - форк, который состоит из проект
 zapret можно даже не объяснять, это DPI дурилка (пиздилка), для обхода блокировок.
 Если что-то у вас не будет работать, пишите в разделе Issues или в дс 6yKBaPbRL
 Установка через git:
+
 Windows:
 ```
 git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_windows_amd64
