@@ -7,13 +7,13 @@ zapret можно даже не объяснять, это DPI дурилка (�
 
 Windows:
 ```
-git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_windows_amd64
+git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_windows_amd64"
 ```
 Linux(ARM):
 ```
-git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_linux_arm64
+git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_linux_arm64"
 ```
 Linux(AMD)
 ```
-git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_linux_amd64
+git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_linux_amd64"
 ```
