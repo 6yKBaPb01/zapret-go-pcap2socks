@@ -1,1 +1,1 @@
-Сначала go-pcap2socks, потом zapret
+Сначала go-pcap2socks, потом zapret, также не забудь установить npcap
