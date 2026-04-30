@@ -36,3 +36,8 @@ Linux (AMD):
 ```
 git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_linux_amd64"
 ```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&theme=dark&legend=top-left" />
+  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&legend=top-left" />
+  <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&legend=top-left" />
+</picture>
