@@ -41,7 +41,7 @@ LISTS_DIR="$ZAPRET_BASE/lists"
 UTILS_DIR="$ZAPRET_BASE/utils"
 
 # Version
-LOCAL_VERSION="1.9.7-linux"
+LOCAL_VERSION="1.6b"
 
 # GitHub URLs (6yKBaPb01/zapret-go-pcap2socks)
 GITHUB_REPO="https://github.com/6yKBaPb01/zapret-go-pcap2socks"
