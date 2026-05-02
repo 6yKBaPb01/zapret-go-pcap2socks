@@ -41,14 +41,14 @@ LISTS_DIR="$ZAPRET_BASE/lists"
 UTILS_DIR="$ZAPRET_BASE/utils"
 
 # Version
-LOCAL_VERSION="1.9.7-linux"
+LOCAL_VERSION="1.6b"
 
-# GitHub URLs (ProcheRAR/zapret-discord-youtube-linux)
-GITHUB_REPO="https://github.com/ProcheRAR/zapret-discord-youtube-linux"
-GITHUB_RAW="https://raw.githubusercontent.com/ProcheRAR/zapret-discord-youtube-linux/main"
+# GitHub URLs (6yKBaPb01/zapret-go-pcap2socks)
+GITHUB_REPO="https://raw.githubusercontent.com/6yKBaPb01"
+GITHUB_RAW="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/main"
 GITHUB_VERSION_URL="$GITHUB_RAW/version.txt"
-IPSET_URL="https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/.service/ipset-service.txt"
-HOSTS_URL="https://raw.githubusercontent.com/Flowseal/zapret-discord-youtube/refs/heads/main/.service/hosts"
+IPSET_URL="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/refs/heads/main/.service/ipset-service.txt"
+HOSTS_URL="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/refs/heads/main/.service/hosts"
 
 # Markers for /etc/hosts block
 HOSTS_MARKER_BEGIN="# BEGIN zapret"
