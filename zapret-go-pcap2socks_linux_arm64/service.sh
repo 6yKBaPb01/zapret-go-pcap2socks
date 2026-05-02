@@ -45,10 +45,10 @@ LOCAL_VERSION="1.9.7-linux"
 
 # GitHub URLs (6yKBaPb01/zapret-go-pcap2socks)
 GITHUB_REPO="https://github.com/6yKBaPb01/zapret-go-pcap2socks"
-GITHUB_RAW="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/main"
-GITHUB_VERSION_URL="$GITHUB_RAW/version.txt"
-IPSET_URL="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/main/ipset-service.txt"
-HOSTS_URL="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/main/.service/hosts"
+GITHUB_RAW="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/tree/main/"
+GITHUB_VERSION_URL="https://github.com/6yKBaPb01/zapret-go-pcap2socks/blob/main/.service/version.txt"
+IPSET_URL="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/blob/main/ipset-service.txt"
+HOSTS_URL="https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/blob/main/.service/hosts"
 
 # Markers for /etc/hosts block
 HOSTS_MARKER_BEGIN="# BEGIN zapret"
