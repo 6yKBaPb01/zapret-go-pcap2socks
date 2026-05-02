@@ -383,7 +383,7 @@ chcp 437 > nul
 cls
 
 :: ===== CHANGED: update URLs to your repository =====
-set "GITHUB_VERSION_URL=https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/tree/main/.service/version.txt"
+set "GITHUB_VERSION_URL=https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/refs/heads/main/.service/version.txt"
 set "GITHUB_RELEASE_URL=https://github.com/6yKBaPb01/zapret-go-pcap2socks/releases/tag/"
 set "GITHUB_DOWNLOAD_URL=https://github.com/6yKBaPb01/zapret-go-pcap2socks/releases/latest"
 :: ===================================================
