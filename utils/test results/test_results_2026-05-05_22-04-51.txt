@@ -1,0 +1,744 @@
+﻿
+Config: general (ALT).bat (Type: dpi)
+  Target: US.GH-HPRN (Self check)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: PL.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SE.AKM-01 (Akamai)
+    HTTP: code=403 size= KB status=OK
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CDN77-01 (CDN77)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-01 (Cloudflare)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-01 (Cloudflare)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-01 (Contabo)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-02 (Contabo)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.DO-01 (DigitalOcean)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-02 (DigitalOcean)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.FST-01 (Fastly)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FST-01 (Fastly)
+    HTTP: code=406 size= KB status=OK
+    TLS1.2: code=406 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-01 (FT/BuyVM)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-02 (FT/BuyVM)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: LU.GCORE-01 (Gcore)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-01 (Google Cloud)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-02 (Google Cloud)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-04 (Hetzner)
+    HTTP: code=403 size= KB status=OK
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.MBCOM-01 (Melbicom)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.MS-01 (Microsoft/Azure)
+    HTTP: code=302 size= KB status=OK
+    TLS1.2: code=302 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: ES.OR-01 (Oracle)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SG.OR-01 (Oracle)
+    HTTP: code=503 size= KB status=OK
+    TLS1.2: code=503 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-01 (OVH)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-02 (OVH)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.SW-01 (Scaleway)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.VLTR-01 (Vultr)
+    HTTP: code=200 size= KB status=FAIL
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.VLTR-01 (Vultr)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+
+Config: general (ALT2).bat (Type: dpi)
+  Target: US.GH-HPRN (Self check)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: PL.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SE.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CDN77-01 (CDN77)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-01 (Cloudflare)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-01 (Cloudflare)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-01 (Contabo)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-02 (Contabo)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-02 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.FST-01 (Fastly)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FST-01 (Fastly)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-01 (FT/BuyVM)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-02 (FT/BuyVM)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: LU.GCORE-01 (Gcore)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-01 (Google Cloud)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-02 (Google Cloud)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-04 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.MBCOM-01 (Melbicom)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.MS-01 (Microsoft/Azure)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: ES.OR-01 (Oracle)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SG.OR-01 (Oracle)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-01 (OVH)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-02 (OVH)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.SW-01 (Scaleway)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.VLTR-01 (Vultr)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.VLTR-01 (Vultr)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+
+Config: general (ALT3).bat (Type: dpi)
+  Target: US.GH-HPRN (Self check)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: PL.AKM-01 (Akamai)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SE.AKM-01 (Akamai)
+    HTTP: code=403 size= KB status=OK
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.AWS-01 (AWS)
+    HTTP: code=301 size= KB status=OK
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CDN77-01 (CDN77)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-01 (Cloudflare)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-02 (Cloudflare)
+    HTTP: code=301 size= KB status=OK
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-01 (Cloudflare)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-02 (Cloudflare)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-01 (Contabo)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-02 (Contabo)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-02 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.FST-01 (Fastly)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FST-01 (Fastly)
+    HTTP: code=406 size= KB status=OK
+    TLS1.2: code=406 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-01 (FT/BuyVM)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-02 (FT/BuyVM)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: LU.GCORE-01 (Gcore)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-01 (Google Cloud)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-02 (Google Cloud)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-04 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.MBCOM-01 (Melbicom)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.MS-01 (Microsoft/Azure)
+    HTTP: code=302 size= KB status=OK
+    TLS1.2: code=302 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: ES.OR-01 (Oracle)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SG.OR-01 (Oracle)
+    HTTP: code=503 size= KB status=OK
+    TLS1.2: code=503 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-01 (OVH)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-02 (OVH)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.SW-01 (Scaleway)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.VLTR-01 (Vultr)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.VLTR-01 (Vultr)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+
+Config: general (ALT4).bat (Type: dpi)
+  Target: US.GH-HPRN (Self check)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: PL.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SE.AKM-01 (Akamai)
+    HTTP: code=403 size= KB status=OK
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CDN77-01 (CDN77)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-01 (Cloudflare)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=301 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-01 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-01 (Contabo)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-02 (Contabo)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.DO-01 (DigitalOcean)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-02 (DigitalOcean)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.FST-01 (Fastly)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FST-01 (Fastly)
+    HTTP: code=406 size= KB status=OK
+    TLS1.2: code=406 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-01 (FT/BuyVM)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-02 (FT/BuyVM)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: LU.GCORE-01 (Gcore)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-01 (Google Cloud)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-02 (Google Cloud)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-01 (Hetzner)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-02 (Hetzner)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-02 (Hetzner)
+    HTTP: code=403 size= KB status=OK
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-04 (Hetzner)
+    HTTP: code=403 size= KB status=OK
+    TLS1.2: code=403 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.MBCOM-01 (Melbicom)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.MS-01 (Microsoft/Azure)
+    HTTP: code=302 size= KB status=OK
+    TLS1.2: code=302 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: ES.OR-01 (Oracle)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SG.OR-01 (Oracle)
+    HTTP: code=503 size= KB status=OK
+    TLS1.2: code=503 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-01 (OVH)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-02 (OVH)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.SW-01 (Scaleway)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.VLTR-01 (Vultr)
+    HTTP: code=200 size= KB status=OK
+    TLS1.2: code=200 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.VLTR-01 (Vultr)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+
+Config: general (ALT5).bat (Type: dpi)
+  Target: UNKNOWN (UNKNOWN)
+    RUNSPACE: code=ERR size=0 KB status=FAIL
+  Target: PL.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SE.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CDN77-01 (CDN77)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-01 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-01 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.CF-02 (Cloudflare)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-01 (Contabo)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.CNTB-02 (Contabo)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-01 (DigitalOcean)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: UK.DO-02 (DigitalOcean)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: CA.FST-01 (Fastly)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FST-01 (Fastly)
+    HTTP: code=406 size= KB status=OK
+    TLS1.2: code=406 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-01 (FT/BuyVM)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.FTBVM-02 (FT/BuyVM)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: LU.GCORE-01 (Gcore)
+    HTTP: code=405 size= KB status=OK
+    TLS1.2: code=405 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-01 (Google Cloud)
+    HTTP: code=400 size= KB status=OK
+    TLS1.2: code=400 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.GC-02 (Google Cloud)
+    HTTP: code=404 size= KB status=OK
+    TLS1.2: code=404 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-01 (Hetzner)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-02 (Hetzner)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FI.HE-04 (Hetzner)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.MBCOM-01 (Melbicom)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.MS-01 (Microsoft/Azure)
+    HTTP: code=302 size= KB status=OK
+    TLS1.2: code=302 size= KB status=OK
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: ES.OR-01 (Oracle)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SG.OR-01 (Oracle)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-01 (OVH)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: FR.OVH-02 (OVH)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: NL.SW-01 (Scaleway)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.VLTR-01 (Vultr)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: US.VLTR-01 (Vultr)
+    HTTP: code=000 size= KB status=LIKELY_BLOCKED
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+
+Config: general (ALT6).bat (Type: dpi)
+  Target: UNKNOWN (UNKNOWN)
+    RUNSPACE: code=ERR size=0 KB status=FAIL
+  Target: PL.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: SE.AKM-01 (Akamai)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
+  Target: DE.AWS-01 (AWS)
+    HTTP: code=000 size= KB status=FAIL
+    TLS1.2: code=000 size= KB status=FAIL
+    TLS1.3: code=000 size= KB status=FAIL
