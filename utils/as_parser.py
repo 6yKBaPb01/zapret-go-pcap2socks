@@ -134,6 +134,7 @@ ASN_LIST = {
     "The Constant Company": "AS20473",
     "Prime Formation GmbH": "AS205634",
     "GitHub": "AS36459",
+    "Telegram Network": "AS62041",
 }
 
 API_URL = "https://stat.ripe.net/data/announced-prefixes/data.json"
