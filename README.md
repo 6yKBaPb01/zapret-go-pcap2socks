@@ -31,7 +31,7 @@
 **Подробнее:** [github.com/DaniilSokolyuk/go-pcap2socks](https://github.com/DaniilSokolyuk/go-pcap2socks)
 
 ### 🔹 zapret-discord-youtube
-Взят тут:[zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube). DPI‑дурилка (инструмент обхода блокировок). Мгновенно восстанавливает доступ к YouTube, Discord и другим сервисам, которые подвергаются глубокой инспекции пакетов.
+Взят оттуда: [zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube). DPI‑дурилка (инструмент обхода блокировок). Мгновенно восстанавливает доступ к YouTube, Discord и другим сервисам, которые подвергаются глубокой инспекции пакетов.
 
 ### 🔹 blockcheck
 Этот инструмент был взят из [zapret-win-bundle](https://github.com/bol-van/zapret-win-bundle). Он помогает найти лучшую стратегию для вас. Если что, вы можете опубликовать через Pull Request или в Issues
