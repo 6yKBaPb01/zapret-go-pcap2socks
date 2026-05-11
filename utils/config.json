@@ -7,18 +7,18 @@
   "dns": {
     "servers": [
       {
-        "address": "local"
+        "address": "8.8.8.8"
+      },
+      {
+        "address": "1.1.1.1"
       }
     ]
   },
   "routing": {
     "rules": [
-      {
-        "dstPort": "53",
-        "outboundTag": "dns-out"
-      }
-    ]
-  },
+      
+  ]
+},
   "outbounds": [
     {
       "tag": "",
