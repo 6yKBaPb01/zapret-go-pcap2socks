@@ -10,7 +10,7 @@
 
 > [!WARNING]
 > Антивирус может ложно определять **zapret-discord-youtube** как вредоносное ПО.  
-> Это известная проблема, можете исключить его или выключить антивирус на время установки. Подробнее: [zapret-win-bundle readme](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md).
+> Это известная проблема, можете исключить детект или выключить антивирус на время установки. Подробнее: [zapret-win-bundle readme](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md).
 
 > [!CAUTION]
 > Я веду [Telegram-канал](https://t.me/podbal6ykbapb) и [Youtube-канал](https://www.youtube.com/@6yKBaPb-q9s). Если увидите что не с моих распростроняется этот форк в другой ссылке или не там, не ведитесь! ЭТО СКАМ!!!
