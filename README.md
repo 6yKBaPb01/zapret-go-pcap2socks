@@ -59,10 +59,10 @@
 ## 💾 Установка через Git
 
 ```bash
-git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_windows_amd64"
+git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks-windows"
 ```
 
 ## 💬 Поддержка:
-Если что‑то не работает — создайте обращение в разделе Issues или свяжитесь со мной в Discord: 6yKBaPb01 или 6yKBaPbRL. Или в Telegram: ```@githuber6ykb```
+Если что‑то не работает — создайте обращение в разделе Issues или свяжитесь со мной в Discord: 6yKBaPb01 или 6yKBaPbRL. 
 
 <picture> <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&theme=dark&legend=top-left" /> <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&legend=top-left" /> <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&legend=top-left" /> </picture>
