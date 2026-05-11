@@ -13,6 +13,7 @@ api.segment.io
 3.datadog.pool.ntp.org
 ab.chatgpt.com
 ffzap.com
+emoji.cdn-telegram.org
 spotify.com
 open.spotify.com
 byspotify.com
