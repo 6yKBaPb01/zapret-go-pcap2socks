@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/platform-Windows-blue?logo=windows" alt="Windows" />
   <img src="https://img.shields.io/badge/language-Go-00ADD8?logo=go" alt="Go" />
   <img src="https://img.shields.io/badge/language-Lua-00ADD8?logo=lua" alt="Lua" />
-  <img src="https://img.shields.io/badge/language-Python-00ADD8?logo=Python" alt="Pyhon" />
+  <img src="https://img.shields.io/badge/language-Python-00ADD8?logo=Python" alt="Python" />
   <img src="https://img.shields.io/badge/license-GPL%203.0%20%2F%20MIT-green" alt="License" />
 </p>
 
@@ -13,7 +13,7 @@
 > Это известная особенность, подробнее: [zapret-win-bundle readme](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md).
 
 > [!CAUTION]
-> Я веду [Telegram-канал](https://t.me/podbal6ykbapb) и [Youtube-канал](https://www.youtube.com/@6yKBaPb-q9s). Если увидите что на других площадках распростроняется этот форк в другой ссылке, не ведитесь! ЭТО СКАМ!!!
+> Я веду [Telegram-канал](https://t.me/podbal6ykbapb) и [Youtube-канал](https://www.youtube.com/@6yKBaPb-q9s). Если увидите что не с моих распростроняется этот форк в другой ссылке, не ведитесь! ЭТО СКАМ!!!
 > Если вы решите сделать обзор на него, то оставляйте ссылку оригинальную!
 
 ## 📦 Описание
