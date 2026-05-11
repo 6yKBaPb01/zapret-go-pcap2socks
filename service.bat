@@ -1,5 +1,5 @@
 @echo off
-set "LOCAL_VERSION=v1.7b"
+set "LOCAL_VERSION=v1.7c"
 
 :: External commands
 if "%~1"=="status_zapret" (
@@ -395,43 +395,43 @@ goto menu
 chcp 437 > nul
 cls
 
-:: ===== CHANGED: update URLs to your repository =====
 set "GITHUB_VERSION_URL=https://raw.githubusercontent.com/6yKBaPb01/zapret-go-pcap2socks/refs/heads/main/.service/version.txt"
 set "GITHUB_RELEASE_URL=https://github.com/6yKBaPb01/zapret-go-pcap2socks/releases/tag/"
 set "GITHUB_DOWNLOAD_URL=https://github.com/6yKBaPb01/zapret-go-pcap2socks/releases/latest"
-:: ===================================================
 
-:: Get the latest version from GitHub
-for /f "delims=" %%A in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri \"%GITHUB_VERSION_URL%\" -Headers @{\"Cache-Control\"=\"no-cache\"} -UseBasicParsing -TimeoutSec 5).Content.Trim()" 2^>nul') do set "GITHUB_VERSION=%%A"
+:: ----- Очистка LOCAL_VERSION от пробелов (на всякий случай) -----
+set "LOCAL_VERSION=%LOCAL_VERSION: =%"
 
-:: Error handling
+:: ----- Получаем версию из GitHub, удаляя ВСЕ пробельные символы (включая \r, \n) -----
+for /f "delims=" %%A in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri \"%GITHUB_VERSION_URL%\" -Headers @{\"Cache-Control\"=\"no-cache\"} -UseBasicParsing -TimeoutSec 5).Content.Trim() -replace '\s',''" 2^>nul') do set "GITHUB_VERSION=%%A"
+
 if not defined GITHUB_VERSION (
     echo Warning: failed to fetch the latest version. This warning does not affect the operation of zapret
     timeout /T 9
-    if "%1"=="soft" exit 
+    if "%1"=="soft" exit
     goto menu
 )
 
-:: Version comparison
+:: ----- Отладка: показываем обе переменные в квадратных скобках -----
+echo LOCAL_VERSION = [%LOCAL_VERSION%]
+echo GITHUB_VERSION = [%GITHUB_VERSION%]
+
+:: Сравнение теперь будет точным
 if "%LOCAL_VERSION%"=="%GITHUB_VERSION%" (
     echo Latest version installed: %LOCAL_VERSION%
-    
-    if "%1"=="soft" exit 
+    if "%1"=="soft" exit
     pause
     goto menu
-) 
+)
 
 echo New version available: %GITHUB_VERSION%
 echo Release page: %GITHUB_RELEASE_URL%%GITHUB_VERSION%
-
 echo Opening the download page...
 start "" "%GITHUB_DOWNLOAD_URL%"
 
-
-if "%1"=="soft" exit 
+if "%1"=="soft" exit
 pause
 goto menu
-
 
 
 :: DIAGNOSTICS =========================
