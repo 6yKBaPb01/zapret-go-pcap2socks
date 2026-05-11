@@ -1,4 +1,4 @@
-$hasErrors = $false
+﻿$hasErrors = $false
 
 $rootDir = Split-Path $PSScriptRoot
 $listsDir = Join-Path $rootDir "lists"
@@ -21,14 +21,11 @@ function Set-IpsetMode {
     $listFile = Join-Path $listsDir "ipset-all.txt"
     $backupFile = Join-Path $listsDir "ipset-all.test-backup.txt"
     if ($mode -eq "any") {
-        # Always backup current file (even if none)
         if (Test-Path $listFile) {
             Copy-Item $listFile $backupFile -Force
         } else {
-            # If none, create empty backup
             "" | Out-File $backupFile -Encoding UTF8
         }
-        # Make file empty
         "" | Out-File $listFile -Encoding UTF8
     } elseif ($mode -eq "restore") {
         if (Test-Path $backupFile) {
@@ -52,7 +49,6 @@ function Add-OrSet {
     if ($dict.Contains($key)) { $dict[$key] = $val } else { $dict.Add($key, $val) }
 }
 
-# Convert raw target value to structured target (supports PING:ip for ping-only targets)
 function Convert-Target {
     param(
         [string]$Name,
@@ -75,7 +71,6 @@ function Convert-Target {
     })
 }
 
-# DPI checker defaults (override via MONITOR_* env vars like in monitor.ps1)
 $dpiTimeoutSeconds = 5
 $dpiRangeBytes = 65536
 $dpiMaxParallel = 8
@@ -85,10 +80,7 @@ if ($env:MONITOR_RANGE) { [int]$dpiRangeBytes = $env:MONITOR_RANGE }
 if ($env:MONITOR_MAX_PARALLEL) { [int]$dpiMaxParallel = $env:MONITOR_MAX_PARALLEL }
 
 function Get-DpiSuite {
-    # Suite sourced from https://github.com/hyperion-cs/dpi-checkers (Apache-2.0 license)
-    # Original copyright retained from dpi-checkers repository
     $url = "https://hyperion-cs.github.io/dpi-checkers/ru/tcp-16-20/suite.v2.json"
-
     try {
         (Invoke-RestMethod -Uri $url -TimeoutSec $dpiTimeoutSeconds) |
             Select-Object `
@@ -249,7 +241,6 @@ function Invoke-DpiSuite {
 
     $results = @()
     foreach ($rs in $runspaces) {
-        # Wait for the runspace to complete with a small grace period beyond curl's timeout
         try {
             $waitMs = ([int]$TimeoutSeconds + 5) * 1000
             $handle = $rs.Handle
@@ -260,9 +251,7 @@ function Invoke-DpiSuite {
                     try { $rs.Powershell.Stop() } catch {}
                 }
             }
-        } catch {
-            # ignore wait errors and attempt to EndInvoke
-        }
+        } catch {}
 
         try {
             $res = $rs.Powershell.EndInvoke($rs.Handle)
@@ -307,6 +296,118 @@ function Invoke-DpiSuite {
         Write-Host ""
         Write-Host "[OK] No 16-20KB freeze pattern detected across targets." -ForegroundColor Green
     }
+
+    return $results
+}
+
+# New function for standard HTTP/ping tests (to avoid code duplication)
+function Invoke-StandardTests {
+    param(
+        [array]$Targets,
+        [int]$CurlTimeoutSeconds = 5
+    )
+
+    $maxParallel = 8
+    $runspacePool = [runspacefactory]::CreateRunspacePool(1, $maxParallel)
+    $runspacePool.Open()
+
+    $scriptBlock = {
+        param($t, $curlTimeoutSeconds)
+
+        $httpPieces = @()
+        if ($t.Url) {
+            $tests = @(
+                @{ Label = "HTTP";   Args = @("--http1.1") },
+                @{ Label = "TLS1.2"; Args = @("--tlsv1.2", "--tls-max", "1.2") },
+                @{ Label = "TLS1.3"; Args = @("--tlsv1.3", "--tls-max", "1.3") }
+            )
+            $baseArgs = @("-I", "-s", "-m", $curlTimeoutSeconds, "-o", "NUL", "-w", "%{http_code}", "--show-error")
+            foreach ($test in $tests) {
+                try {
+                    $stderr = $null
+                    $output = & curl.exe @baseArgs @($test.Args) $t.Url 2>&1 | ForEach-Object {
+                        if ($_ -is [System.Management.Automation.ErrorRecord]) {
+                            $stderr += $_.Exception.Message + " "
+                        } else { $_ }
+                    }
+                    $httpCode = ($output | Out-String).Trim()
+
+                    $dnsHijack = ($stderr -match "Could not resolve host|certificate|SSL certificate problem|self[- ]?signed|certificate verify failed|unable to get local issuer certificate")
+                    if ($dnsHijack) {
+                        $httpPieces += "$($test.Label):SSL  "
+                        continue
+                    }
+                    $unsupported = (($LASTEXITCODE -eq 35) -or ($stderr -match "does not support|not supported|protocol\s+'?.+'?\s+not\s+supported|unsupported protocol|TLS.*not supported|Unrecognized option|Unknown option|unsupported option|unsupported feature|schannel"))
+                    if ($unsupported) {
+                        $httpPieces += "$($test.Label):UNSUP"
+                        continue
+                    }
+                    $ok = ($LASTEXITCODE -eq 0)
+                    if ($ok) {
+                        $httpPieces += "$($test.Label):OK   "
+                    } else {
+                        $httpPieces += "$($test.Label):ERROR"
+                    }
+                } catch {
+                    $httpPieces += "$($test.Label):ERROR"
+                }
+            }
+        }
+
+        $pingResult = "n/a"
+        $pingAvg = $null
+        if ($t.PingTarget) {
+            try {
+                $pings = Test-Connection -ComputerName $t.PingTarget -Count 3 -ErrorAction Stop
+                $avg = ($pings | Measure-Object -Property ResponseTime -Average).Average
+                $pingResult = "{0:N0} ms" -f $avg
+                $pingAvg = $avg
+            } catch {
+                $pingResult = "Timeout"
+            }
+        }
+
+        return [PSCustomObject]@{
+            Name       = $t.Name
+            HttpTokens = $httpPieces
+            PingResult = $pingResult
+            PingAvgMs  = $pingAvg
+            IsUrl      = [bool]$t.Url
+        }
+    }
+
+    $runspaces = @()
+    foreach ($target in $Targets) {
+        $ps = [powershell]::Create().AddScript($scriptBlock)
+        [void]$ps.AddArgument($target)
+        [void]$ps.AddArgument($curlTimeoutSeconds)
+        $ps.RunspacePool = $runspacePool
+        $runspaces += [PSCustomObject]@{ Powershell = $ps; Handle = $ps.BeginInvoke() }
+    }
+
+    $results = @()
+    foreach ($rs in $runspaces) {
+        try {
+            $waitMs = ($curlTimeoutSeconds + 5) * 1000
+            $handle = $rs.Handle
+            if ($handle -and $handle.AsyncWaitHandle) {
+                $completed = $handle.AsyncWaitHandle.WaitOne($waitMs)
+                if (-not $completed) {
+                    Write-Host "[WARN] Runspace for target timed out; stopping runspace..." -ForegroundColor Yellow
+                    try { $rs.Powershell.Stop() } catch {}
+                }
+            }
+        } catch {}
+        try {
+            $results += $rs.Powershell.EndInvoke($rs.Handle)
+        } catch {
+            Write-Host "[WARN] EndInvoke failed, adding failure." -ForegroundColor Yellow
+            $results += [PSCustomObject]@{ Name = 'UNKNOWN'; HttpTokens = @('HTTP:ERROR'); PingResult = 'Timeout'; PingAvgMs = $null; IsUrl = $true }
+        }
+        $rs.Powershell.Dispose()
+    }
+    $runspacePool.Close()
+    $runspacePool.Dispose()
 
     return $results
 }
@@ -377,17 +478,19 @@ $batFiles = Get-ChildItem -Path $targetDir -Filter "*.bat" | Where-Object { $_.N
 
 $globalResults = @()
 
-# Select top-level test type (standard vs DPI checkers)
+# Updated Read-TestType with combined option
 function Read-TestType {
     while ($true) {
         Write-Host ""
         Write-Host "Select test type:" -ForegroundColor Cyan
         Write-Host "  [1] Standard tests (HTTP/ping)" -ForegroundColor Gray
         Write-Host "  [2] DPI checkers (TCP 16-20 freeze)" -ForegroundColor Gray
-        $choice = Read-Host "Enter 1 or 2"
+        Write-Host "  [3] Combined (DPI + Ping) (VERY LONG)" -ForegroundColor Gray
+        $choice = Read-Host "Enter 1, 2 or 3"
         switch ($choice) {
             '1' { return 'standard' }
             '2' { return 'dpi' }
+            '3' { return 'combined' }
             default { Write-Host "Incorrect input. Please try again." -ForegroundColor Yellow }
         }
     }
@@ -474,8 +577,7 @@ function Read-ConfigSelection {
             continue
         }
 
-        # Checker
-         Write-Host "Selected configs: $($valid -join ', ')" -ForegroundColor Green
+        Write-Host "Selected configs: $($valid -join ', ')" -ForegroundColor Green
         if ($hasErrors) {
             Write-Host "Some entries were skipped due to errors (see warnings above)." -ForegroundColor Yellow
         }
@@ -486,464 +588,438 @@ function Read-ConfigSelection {
 
 while ($true) {
     $globalResults = @()
-$testType = Read-TestType
-$mode = Read-ModeSelection
-if ($mode -eq 'select') {
-    $selected = Read-ConfigSelection -allFiles $batFiles
-    $batFiles = @($selected)
-}
-
-# Load targets once for standard mode
-$targetList = @()
-$maxNameLen = 20
-if ($testType -eq 'standard') {
-    $targetsFile = Join-Path $utilsDir "targets.txt"
-    $rawTargets = New-OrderedDict
-    if (Test-Path $targetsFile) {
-        Get-Content $targetsFile | ForEach-Object {
-            if ($_ -match '^\s*(\w+)\s*=\s*"(.+)"\s*$') {
-                Add-OrSet -dict $rawTargets -key $matches[1] -val $matches[2]
-            }
-        }
+    $testType = Read-TestType
+    $mode = Read-ModeSelection
+    if ($mode -eq 'select') {
+        $selected = Read-ConfigSelection -allFiles $batFiles
+        $batFiles = @($selected)
     }
 
-    if ($rawTargets.Count -eq 0) {
-        Write-Host "[INFO] targets.txt missing or empty. Using defaults." -ForegroundColor Gray
-        Add-OrSet $rawTargets "Discord Main"           "https://discord.com"
-        Add-OrSet $rawTargets "Discord Gateway"        "https://gateway.discord.gg"
-        Add-OrSet $rawTargets "Discord CDN"            "https://cdn.discordapp.com"
-        Add-OrSet $rawTargets "Discord Updates"        "https://updates.discord.com"
-        Add-OrSet $rawTargets "YouTube Web"            "https://www.youtube.com"
-        Add-OrSet $rawTargets "YouTube Short"          "https://youtu.be"
-        Add-OrSet $rawTargets "YouTube Image"          "https://i.ytimg.com"
-        Add-OrSet $rawTargets "YouTube Video Redirect" "https://redirector.googlevideo.com"
-        Add-OrSet $rawTargets "Google Main"            "https://www.google.com"
-        Add-OrSet $rawTargets "Google Gstatic"         "https://www.gstatic.com"
-        Add-OrSet $rawTargets "Cloudflare Web"         "https://www.cloudflare.com"
-        Add-OrSet $rawTargets "Cloudflare CDN"         "https://cdnjs.cloudflare.com"
-        Add-OrSet $rawTargets "Cloudflare DNS 1.1.1.1" "PING:1.1.1.1"
-        Add-OrSet $rawTargets "Cloudflare DNS 1.0.0.1" "PING:1.0.0.1"
-        Add-OrSet $rawTargets "Google DNS 8.8.8.8"     "PING:8.8.8.8"
-        Add-OrSet $rawTargets "Google DNS 8.8.4.4"     "PING:8.8.4.4"
-        Add-OrSet $rawTargets "Quad9 DNS 9.9.9.9"      "PING:9.9.9.9"
-    } else {
-        Write-Host ""
-        Write-Host "[INFO] Loaded targets from targets.txt" -ForegroundColor Gray
-        Write-Host "[INFO] Targets loaded: $($rawTargets.Count)" -ForegroundColor Gray
-    }
-
-    foreach ($key in $rawTargets.Keys) {
-        $targetList += Convert-Target -Name $key -Value $rawTargets[$key]
-    }
-
-    $maxNameLen = ($targetList | ForEach-Object { $_.Name.Length } | Measure-Object -Maximum).Maximum
-    if (-not $maxNameLen -or $maxNameLen -lt 10) { $maxNameLen = 10 }
-}
-
-# Ensure we have configs to run
-if (-not $batFiles -or $batFiles.Count -eq 0) {
-    Write-Host "[ERROR] No general*.bat files found" -ForegroundColor Red
-    Write-Host "Press any key to exit..." -ForegroundColor Yellow
-    [void][System.Console]::ReadKey($true)
-    exit 1
-}
-
-# Stop winws
-function Stop-Zapret {
-    Get-Process -Name "winws" -ErrorAction SilentlyContinue | Stop-Process -Force
-}
-
-# Capture/restore running winws instances to return user ipset/config
-function Get-WinwsSnapshot {
-    try {
-        return Get-CimInstance Win32_Process -Filter "Name='winws.exe'" |
-            Select-Object ProcessId, CommandLine, ExecutablePath
-    } catch {
-        return @()
-    }
-}
-
-function Restore-WinwsSnapshot {
-    param($snapshot)
-
-    if (-not $snapshot -or $snapshot.Count -eq 0) { return }
-
-    $current = @()
-    try { $current = (Get-WinwsSnapshot).CommandLine } catch { $current = @() }
-
-    Write-Host "[INFO] Restoring previously running winws instances..." -ForegroundColor DarkGray
-    foreach ($p in $snapshot) {
-        if (-not $p.ExecutablePath) { continue }
-
-        # Skip if an identical command line is already active
-        if ($current -and $current -contains $p.CommandLine) { continue }
-
-        $exe = $p.ExecutablePath
-        $processArgs = ""
-        if ($p.CommandLine) {
-            $quotedExe = '"' + $exe + '"'
-            if ($p.CommandLine.StartsWith($quotedExe)) {
-                $processArgs = $p.CommandLine.Substring($quotedExe.Length).Trim()
-            } elseif ($p.CommandLine.StartsWith($exe)) {
-                $processArgs = $p.CommandLine.Substring($exe.Length).Trim()
-            }
-        }
-
-        Start-Process -FilePath $exe -ArgumentList $processArgs -WorkingDirectory (Split-Path $exe -Parent) -WindowStyle Minimized | Out-Null
-    }
-}
-
-$env:NO_UPDATE_CHECK = "1"
-$originalWinws = Get-WinwsSnapshot
-
-Write-Host ""
-Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "                 ZAPRET CONFIG TESTS" -ForegroundColor Cyan
-Write-Host "                 Mode: $($testType.ToUpper())" -ForegroundColor Cyan
-Write-Host "                 Total configs: $($batFiles.Count.ToString().PadLeft(2))" -ForegroundColor Cyan
-Write-Host "============================================================" -ForegroundColor Cyan
-
-try {
-    # Save original ipset status and switch to 'any' for accurate DPI tests
-    if (($originalIpsetStatus -ne "any") -and ($testType -eq 'dpi')) {
-        Write-Host "[WARNING] Ipset is in '$originalIpsetStatus' mode. Switching to 'any' for accurate DPI tests..." -ForegroundColor Yellow
-        Set-IpsetMode -mode "any"
-        # Create flag file to indicate ipset was switched
-        "" | Out-File -FilePath $ipsetFlagFile -Encoding UTF8
-    }
-    Write-Host "[WARNING] Tests may take several minutes to complete. Please wait..." -ForegroundColor Yellow
-
-    $configNum = 0
-    foreach ($file in $batFiles) {
-    $configNum++
-    Write-Host ""
-    Write-Host "------------------------------------------------------------" -ForegroundColor DarkCyan
-    Write-Host "  [$configNum/$($batFiles.Count)] $($file.Name)" -ForegroundColor Yellow
-    Write-Host "------------------------------------------------------------" -ForegroundColor DarkCyan
-    
-    # Cleanup
-    Stop-Zapret
-    
-    # Start config
-    Write-Host "  > Starting config..." -ForegroundColor Cyan
-    $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$($file.FullName)`"" -WorkingDirectory $targetDir -PassThru -WindowStyle Minimized
-    
-    # Wait init
-    Start-Sleep -Seconds 5
-    
-    if ($testType -eq 'standard') {
-        $curlTimeoutSeconds = 5
-
-        # Parallel target checks via runspace pool (faster than jobs)
-        $maxParallel = 8
-        $runspacePool = [runspacefactory]::CreateRunspacePool(1, $maxParallel)
-        $runspacePool.Open()
-
-        $scriptBlock = {
-            param($t, $curlTimeoutSeconds)
-
-            $httpPieces = @()
-
-            if ($t.Url) {
-                $tests = @(
-                    @{ Label = "HTTP";   Args = @("--http1.1") },
-                    @{ Label = "TLS1.2"; Args = @("--tlsv1.2", "--tls-max", "1.2") },
-                    @{ Label = "TLS1.3"; Args = @("--tlsv1.3", "--tls-max", "1.3") }
-                )
-
-                $baseArgs = @("-I", "-s", "-m", $curlTimeoutSeconds, "-o", "NUL", "-w", "%{http_code}", "--show-error")
-                foreach ($test in $tests) {
-                    try {
-                        $curlArgs = $baseArgs + $test.Args
-                        $stderr = $null
-                        $output = & curl.exe @curlArgs $t.Url 2>&1 | ForEach-Object {
-                            if ($_ -is [System.Management.Automation.ErrorRecord]) {
-                                $stderr += $_.Exception.Message + " "
-                            } else {
-                                $_
-                            }
-                        }
-                        $httpCode = ($output | Out-String).Trim()
-                        
-                        $dnsHijack = ($stderr -match "Could not resolve host|certificate|SSL certificate problem|self[- ]?signed|certificate verify failed|unable to get local issuer certificate")                        
-                        if ($dnsHijack) {
-                            $httpPieces += "$($test.Label):SSL  "
-                            continue
-                        }
-                        
-                        $unsupported = (($LASTEXITCODE -eq 35) -or ($stderr -match "does not support|not supported|protocol\s+'?.+'?\s+not\s+supported|unsupported protocol|TLS.*not supported|Unrecognized option|Unknown option|unsupported option|unsupported feature|schannel"))
-                        if ($unsupported) {
-                            $httpPieces += "$($test.Label):UNSUP"
-                            continue
-                        }
-
-                        $ok = ($LASTEXITCODE -eq 0)
-                        if ($ok) {
-                            $httpPieces += "$($test.Label):OK   "
-                        } else {
-                            $httpPieces += "$($test.Label):ERROR"
-                        }
-                    } catch {
-                        $httpPieces += "$($test.Label):ERROR"
-                    }
-                }
-            }
-
-            $pingResult = "n/a"
-            if ($t.PingTarget) {
-                try {
-                    $pings = Test-Connection -ComputerName $t.PingTarget -Count 3 -ErrorAction Stop
-                    $avg = ($pings | Measure-Object -Property ResponseTime -Average).Average
-                    $pingResult = "{0:N0} ms" -f $avg
-                } catch {
-                    $pingResult = "Timeout"
-                }
-            }
-
-            return (New-Object PSObject -Property @{
-                Name       = $t.Name
-                HttpTokens = $httpPieces
-                PingResult = $pingResult
-                IsUrl      = [bool]$t.Url
-            })
-        }
-
-        $runspaces = @()
-        foreach ($target in $targetList) {
-            $ps = [powershell]::Create().AddScript($scriptBlock)
-            [void]$ps.AddArgument($target)
-            [void]$ps.AddArgument($curlTimeoutSeconds)
-            $ps.RunspacePool = $runspacePool
-
-            $runspaces += [PSCustomObject]@{
-                Powershell = $ps
-                Handle     = $ps.BeginInvoke()
-            }
-        }
-
-        $script:currentLine = "  > Running tests..."
-        Write-Host $script:currentLine -ForegroundColor DarkGray
-
-        $targetResults = @()
-        foreach ($rs in $runspaces) {
-            try {
-                $waitMs = ([int]$curlTimeoutSeconds + 5) * 1000
-                $handle = $rs.Handle
-                if ($handle -and $handle.AsyncWaitHandle) {
-                    $completed = $handle.AsyncWaitHandle.WaitOne($waitMs)
-                    if (-not $completed) {
-                        Write-Host "[WARN] Runspace for target timed out after $waitMs ms; stopping runspace..." -ForegroundColor Yellow
-                        try { $rs.Powershell.Stop() } catch {}
-                    }
-                }
-            } catch {
-                # ignore
-            }
-
-            try {
-                $targetResults += $rs.Powershell.EndInvoke($rs.Handle)
-            } catch {
-                Write-Host "[WARN] EndInvoke failed for a runspace; treating as failure." -ForegroundColor Yellow
-                $targetResults += [PSCustomObject]@{ Name = 'UNKNOWN'; HttpTokens = @('HTTP:ERROR'); PingResult = 'Timeout'; IsUrl = $true }
-            }
-            $rs.Powershell.Dispose()
-        }
-
-        $runspacePool.Close()
-        $runspacePool.Dispose()
-
-        $targetLookup = @{}
-        foreach ($res in $targetResults) { $targetLookup[$res.Name] = $res }
-
-        foreach ($target in $targetList) {
-            $res = $targetLookup[$target.Name]
-            if (-not $res) { continue }
-
-            Write-Host "  $($target.Name.PadRight($maxNameLen))    " -NoNewline
-
-            if ($res.IsUrl -and $res.HttpTokens) {
-                foreach ($tok in $res.HttpTokens) {
-                    $tokColor = "Green"
-                    if ($tok -match "UNSUP") { $tokColor = "Yellow" }
-                    elseif ($tok -match "SSL") { $tokColor = "Red" }
-                    elseif ($tok -match "ERR") { $tokColor = "Red" }
-                    Write-Host " $tok" -NoNewline -ForegroundColor $tokColor
-                }
-                Write-Host " | Ping: " -NoNewline -ForegroundColor DarkGray
-                if ($res.PingResult -eq "Timeout") {
-                    $pingColor = "Yellow"
-                } else {
-                    $pingColor = "Cyan"
-                }
-                Write-Host "$($res.PingResult)" -NoNewline -ForegroundColor $pingColor
-                Write-Host ""
-            } else {
-                # Ping-only target
-                Write-Host " Ping: " -NoNewline -ForegroundColor DarkGray
-                if ($res.PingResult -eq "Timeout") {
-                    $pingColor = "Red"
-                } else {
-                    $pingColor = "Cyan"
-                }
-                Write-Host "$($res.PingResult)" -ForegroundColor $pingColor
-            }
-
-        }
-
-        $globalResults += @{ Config = $file.Name; Type = 'standard'; Results = $targetResults }
-    } else {
-        Write-Host "  > Running DPI checkers..." -ForegroundColor DarkGray
-        $dpiResults = Invoke-DpiSuite -Targets $dpiTargets -TimeoutSeconds $dpiTimeoutSeconds -RangeBytes $dpiRangeBytes -MaxParallel $dpiMaxParallel
-        $globalResults += @{ Config = $file.Name; Type = 'dpi'; Results = $dpiResults }
-    }
-    
-    # Stop
-    Stop-Zapret
-    if (-not $proc.HasExited) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
-}
-
-    Write-Host ""
-    Write-Host "All tests finished." -ForegroundColor Green
-
-    # Analytics
-    $analytics = @{}
-    foreach ($res in $globalResults) {
-        if ($res.Type -eq 'standard') {
-            foreach ($targetRes in $res.Results) {
-                $config = $res.Config
-                if (-not $analytics.ContainsKey($config)) { $analytics[$config] = @{ OK = 0; ERROR = 0; UNSUP = 0; PingOK = 0; PingFail = 0 } }
-                if ($targetRes.IsUrl) {
-                    foreach ($tok in $targetRes.HttpTokens) {
-                        if ($tok -match "OK") { $analytics[$config].OK++ }
-                        elseif ($tok -match "SSL") { $analytics[$config].ERROR++ }
-                        elseif ($tok -match "ERROR") { $analytics[$config].ERROR++ }
-                        elseif ($tok -match "UNSUP") { $analytics[$config].UNSUP++ }
-                    }
-                }
-                if ($targetRes.PingResult -ne "Timeout" -and $targetRes.PingResult -ne "n/a") { $analytics[$config].PingOK++ } else { $analytics[$config].PingFail++ }
-            }
-        } elseif ($res.Type -eq 'dpi') {
-            foreach ($targetRes in $res.Results) {
-                $config = $res.Config
-                if (-not $analytics.ContainsKey($config)) { $analytics[$config] = @{ OK = 0; FAIL = 0; UNSUPPORTED = 0; LIKELY_BLOCKED = 0 } }
-                foreach ($line in $targetRes.Lines) {
-                    if ($line.Status -eq "OK") { $analytics[$config].OK++ }
-                    elseif ($line.Status -eq "FAIL") { $analytics[$config].FAIL++ }
-                    elseif ($line.Status -eq "UNSUPPORTED") { $analytics[$config].UNSUPPORTED++ }
-                    elseif ($line.Status -eq "LIKELY_BLOCKED") { $analytics[$config].LIKELY_BLOCKED++ }
+    # Load targets for standard and combined modes
+    $targetList = @()
+    $maxNameLen = 20
+    if ($testType -eq 'standard' -or $testType -eq 'combined') {
+        $targetsFile = Join-Path $utilsDir "targets.txt"
+        $rawTargets = New-OrderedDict
+        if (Test-Path $targetsFile) {
+            Get-Content $targetsFile | ForEach-Object {
+                if ($_ -match '^\s*(\w+)\s*=\s*"(.+)"\s*$') {
+                    Add-OrSet -dict $rawTargets -key $matches[1] -val $matches[2]
                 }
             }
         }
-    }
 
-    Write-Host ""
-    Write-Host "=== ANALYTICS ===" -ForegroundColor Cyan
-    foreach ($config in $analytics.Keys) {
-        $a = $analytics[$config]
-        if ($a.ContainsKey('PingOK')) {
-            Write-Host "$config : HTTP OK: $($a.OK), ERR: $($a.ERROR), UNSUP: $($a.UNSUP), Ping OK: $($a.PingOK), Fail: $($a.PingFail)" -ForegroundColor Yellow
+        if ($rawTargets.Count -eq 0) {
+            Write-Host "[INFO] targets.txt missing or empty. Using defaults." -ForegroundColor Gray
+            Add-OrSet $rawTargets "Discord Main"           "https://discord.com"
+            Add-OrSet $rawTargets "Discord Gateway"        "https://gateway.discord.gg"
+            Add-OrSet $rawTargets "Discord CDN"            "https://cdn.discordapp.com"
+            Add-OrSet $rawTargets "Discord Updates"        "https://updates.discord.com"
+            Add-OrSet $rawTargets "YouTube Web"            "https://www.youtube.com"
+            Add-OrSet $rawTargets "YouTube Short"          "https://youtu.be"
+            Add-OrSet $rawTargets "YouTube Image"          "https://i.ytimg.com"
+            Add-OrSet $rawTargets "YouTube Video Redirect" "https://redirector.googlevideo.com"
+            Add-OrSet $rawTargets "Google Main"            "https://www.google.com"
+            Add-OrSet $rawTargets "Google Gstatic"         "https://www.gstatic.com"
+            Add-OrSet $rawTargets "Cloudflare Web"         "https://www.cloudflare.com"
+            Add-OrSet $rawTargets "Cloudflare CDN"         "https://cdnjs.cloudflare.com"
+            Add-OrSet $rawTargets "Cloudflare DNS 1.1.1.1" "PING:1.1.1.1"
+            Add-OrSet $rawTargets "Cloudflare DNS 1.0.0.1" "PING:1.0.0.1"
+            Add-OrSet $rawTargets "Google DNS 8.8.8.8"     "PING:8.8.8.8"
+            Add-OrSet $rawTargets "Google DNS 8.8.4.4"     "PING:8.8.4.4"
+            Add-OrSet $rawTargets "Quad9 DNS 9.9.9.9"      "PING:9.9.9.9"
         } else {
-            Write-Host "$config : OK: $($a.OK), FAIL: $($a.FAIL), UNSUP: $($a.UNSUPPORTED), BLOCKED: $($a.LIKELY_BLOCKED)" -ForegroundColor Yellow
+            Write-Host ""
+            Write-Host "[INFO] Loaded targets from targets.txt" -ForegroundColor Gray
+            Write-Host "[INFO] Targets loaded: $($rawTargets.Count)" -ForegroundColor Gray
+        }
+
+        foreach ($key in $rawTargets.Keys) {
+            $targetList += Convert-Target -Name $key -Value $rawTargets[$key]
+        }
+
+        $maxNameLen = ($targetList | ForEach-Object { $_.Name.Length } | Measure-Object -Maximum).Maximum
+        if (-not $maxNameLen -or $maxNameLen -lt 10) { $maxNameLen = 10 }
+    }
+
+    if (-not $batFiles -or $batFiles.Count -eq 0) {
+        Write-Host "[ERROR] No general*.bat files found" -ForegroundColor Red
+        Write-Host "Press any key to exit..." -ForegroundColor Yellow
+        [void][System.Console]::ReadKey($true)
+        exit 1
+    }
+
+    # Stop winws
+    function Stop-Zapret {
+        Get-Process -Name "winws" -ErrorAction SilentlyContinue | Stop-Process -Force
+    }
+
+    function Get-WinwsSnapshot {
+        try {
+            return Get-CimInstance Win32_Process -Filter "Name='winws.exe'" |
+                Select-Object ProcessId, CommandLine, ExecutablePath
+        } catch {
+            return @()
         }
     }
 
-    # Determine best strategy
-    $bestConfig = $null
-    $maxScore = 0
-    $maxPing = -1
-    foreach ($config in $analytics.Keys) {
-        $a = $analytics[$config]
-        $score = $a.OK
-        $pingScore = 0
-        if ($a.ContainsKey('PingOK')) {
-            $pingScore = $a.PingOK
+    function Restore-WinwsSnapshot {
+        param($snapshot)
+        if (-not $snapshot -or $snapshot.Count -eq 0) { return }
+        $current = @()
+        try { $current = (Get-WinwsSnapshot).CommandLine } catch { $current = @() }
+        Write-Host "[INFO] Restoring previously running winws instances..." -ForegroundColor DarkGray
+        foreach ($p in $snapshot) {
+            if (-not $p.ExecutablePath) { continue }
+            if ($current -and $current -contains $p.CommandLine) { continue }
+            $exe = $p.ExecutablePath
+            $processArgs = ""
+            if ($p.CommandLine) {
+                $quotedExe = '"' + $exe + '"'
+                if ($p.CommandLine.StartsWith($quotedExe)) {
+                    $processArgs = $p.CommandLine.Substring($quotedExe.Length).Trim()
+                } elseif ($p.CommandLine.StartsWith($exe)) {
+                    $processArgs = $p.CommandLine.Substring($exe.Length).Trim()
+                }
+            }
+            Start-Process -FilePath $exe -ArgumentList $processArgs -WorkingDirectory (Split-Path $exe -Parent) -WindowStyle Minimized | Out-Null
         }
-        if ($score -gt $maxScore) {
-            $maxScore = $score
-            $maxPing = $pingScore
-            $bestConfig = $config
-        } elseif ($score -eq $maxScore) {
-            if ($pingScore -gt $maxPing) {
-                $maxPing = $pingScore
+    }
+
+    $env:NO_UPDATE_CHECK = "1"
+    $originalWinws = Get-WinwsSnapshot
+
+    Write-Host ""
+    Write-Host "============================================================" -ForegroundColor Cyan
+    Write-Host "                 ZAPRET CONFIG TESTS" -ForegroundColor Cyan
+    Write-Host "                 Mode: $($testType.ToUpper())" -ForegroundColor Cyan
+    Write-Host "                 Total configs: $($batFiles.Count.ToString().PadLeft(2))" -ForegroundColor Cyan
+    Write-Host "============================================================" -ForegroundColor Cyan
+
+    try {
+        # Switch to 'any' ipset for DPI or combined modes
+        if (($originalIpsetStatus -ne "any") -and ($testType -eq 'dpi' -or $testType -eq 'combined')) {
+            Write-Host "[WARNING] Ipset is in '$originalIpsetStatus' mode. Switching to 'any' for accurate DPI tests..." -ForegroundColor Yellow
+            Set-IpsetMode -mode "any"
+            "" | Out-File -FilePath $ipsetFlagFile -Encoding UTF8
+        }
+        Write-Host "[WARNING] Tests may take several minutes to complete. Please wait..." -ForegroundColor Yellow
+
+        $configNum = 0
+        foreach ($file in $batFiles) {
+            $configNum++
+            Write-Host ""
+            Write-Host "------------------------------------------------------------" -ForegroundColor DarkCyan
+            Write-Host "  [$configNum/$($batFiles.Count)] $($file.Name)" -ForegroundColor Yellow
+            Write-Host "------------------------------------------------------------" -ForegroundColor DarkCyan
+
+            Stop-Zapret
+
+            Write-Host "  > Starting config..." -ForegroundColor Cyan
+            $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$($file.FullName)`"" -WorkingDirectory $targetDir -PassThru -WindowStyle Minimized
+            Start-Sleep -Seconds 5
+
+            if ($testType -eq 'standard') {
+                $targetResults = Invoke-StandardTests -Targets $targetList -CurlTimeoutSeconds 5
+                $globalResults += @{ Config = $file.Name; Type = 'standard'; Results = $targetResults }
+
+                # Display results
+                $targetLookup = @{}
+                foreach ($res in $targetResults) { $targetLookup[$res.Name] = $res }
+                foreach ($target in $targetList) {
+                    $res = $targetLookup[$target.Name]
+                    if (-not $res) { continue }
+                    Write-Host "  $($target.Name.PadRight($maxNameLen))    " -NoNewline
+                    if ($res.IsUrl -and $res.HttpTokens) {
+                        foreach ($tok in $res.HttpTokens) {
+                            $tokColor = "Green"
+                            if ($tok -match "UNSUP") { $tokColor = "Yellow" }
+                            elseif ($tok -match "SSL") { $tokColor = "Red" }
+                            elseif ($tok -match "ERR") { $tokColor = "Red" }
+                            Write-Host " $tok" -NoNewline -ForegroundColor $tokColor
+                        }
+                        Write-Host " | Ping: " -NoNewline -ForegroundColor DarkGray
+                        if ($res.PingResult -eq "Timeout") {
+                            $pingColor = "Yellow"
+                        } else {
+                            $pingColor = "Cyan"
+                        }
+                        Write-Host "$($res.PingResult)" -NoNewline -ForegroundColor $pingColor
+                        Write-Host ""
+                    } else {
+                        Write-Host " Ping: " -NoNewline -ForegroundColor DarkGray
+                        if ($res.PingResult -eq "Timeout") {
+                            $pingColor = "Red"
+                        } else {
+                            $pingColor = "Cyan"
+                        }
+                        Write-Host "$($res.PingResult)" -ForegroundColor $pingColor
+                    }
+                }
+            } elseif ($testType -eq 'dpi') {
+                Write-Host "  > Running DPI checkers..." -ForegroundColor DarkGray
+                $dpiResults = Invoke-DpiSuite -Targets $dpiTargets -TimeoutSeconds $dpiTimeoutSeconds -RangeBytes $dpiRangeBytes -MaxParallel $dpiMaxParallel
+                $globalResults += @{ Config = $file.Name; Type = 'dpi'; Results = $dpiResults }
+            } elseif ($testType -eq 'combined') {
+                Write-Host "  > Running DPI checkers..." -ForegroundColor DarkGray
+                $dpiResults = Invoke-DpiSuite -Targets $dpiTargets -TimeoutSeconds $dpiTimeoutSeconds -RangeBytes $dpiRangeBytes -MaxParallel $dpiMaxParallel
+                Start-Sleep -Seconds 2
+                Write-Host "  > Running standard tests..." -ForegroundColor DarkGray
+                $stdResults = Invoke-StandardTests -Targets $targetList -CurlTimeoutSeconds 5
+                $globalResults += @{ Config = $file.Name; Type = 'combined'; Dpi = $dpiResults; Std = $stdResults }
+
+                # Display DPI results (brief)
+                # (DPI output is already printed inside Invoke-DpiSuite)
+                # Display standard results
+                $targetLookup = @{}
+                foreach ($res in $stdResults) { $targetLookup[$res.Name] = $res }
+                Write-Host "`n  Standard test results:" -ForegroundColor Cyan
+                foreach ($target in $targetList) {
+                    $res = $targetLookup[$target.Name]
+                    if (-not $res) { continue }
+                    Write-Host "  $($target.Name.PadRight($maxNameLen))    " -NoNewline
+                    if ($res.IsUrl -and $res.HttpTokens) {
+                        foreach ($tok in $res.HttpTokens) {
+                            $tokColor = "Green"
+                            if ($tok -match "UNSUP") { $tokColor = "Yellow" }
+                            elseif ($tok -match "SSL") { $tokColor = "Red" }
+                            elseif ($tok -match "ERR") { $tokColor = "Red" }
+                            Write-Host " $tok" -NoNewline -ForegroundColor $tokColor
+                        }
+                        Write-Host " | Ping: " -NoNewline -ForegroundColor DarkGray
+                        if ($res.PingResult -eq "Timeout") {
+                            $pingColor = "Yellow"
+                        } else {
+                            $pingColor = "Cyan"
+                        }
+                        Write-Host "$($res.PingResult)" -NoNewline -ForegroundColor $pingColor
+                        Write-Host ""
+                    } else {
+                        Write-Host " Ping: " -NoNewline -ForegroundColor DarkGray
+                        if ($res.PingResult -eq "Timeout") {
+                            $pingColor = "Red"
+                        } else {
+                            $pingColor = "Cyan"
+                        }
+                        Write-Host "$($res.PingResult)" -ForegroundColor $pingColor
+                    }
+                }
+            }
+
+            Stop-Zapret
+            if (-not $proc.HasExited) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
+        }
+
+        Write-Host ""
+        Write-Host "All tests finished." -ForegroundColor Green
+
+        # Analytics (updated for combined)
+        $analytics = @{}
+        foreach ($res in $globalResults) {
+            $config = $res.Config
+            if (-not $analytics.ContainsKey($config)) {
+                $analytics[$config] = @{
+                    DPI_OK = 0; DPI_FAIL = 0; DPI_UNSUP = 0; DPI_BLOCKED = 0
+                    HTTP_OK = 0; HTTP_ERR = 0; HTTP_UNSUP = 0
+                    PingOK = 0; PingFail = 0
+                    PingTotalMs = 0.0; PingCount = 0
+                }
+            }
+            $a = $analytics[$config]
+
+            if ($res.Type -eq 'standard') {
+                foreach ($targetRes in $res.Results) {
+                    if ($targetRes.IsUrl) {
+                        foreach ($tok in $targetRes.HttpTokens) {
+                            if ($tok -match "OK")    { $a.HTTP_OK++ }
+                            elseif ($tok -match "SSL")   { $a.HTTP_ERR++ }
+                            elseif ($tok -match "ERROR") { $a.HTTP_ERR++ }
+                            elseif ($tok -match "UNSUP") { $a.HTTP_UNSUP++ }
+                        }
+                    }
+                    if ($targetRes.PingResult -ne "Timeout" -and $targetRes.PingResult -ne "n/a") {
+                        $a.PingOK++
+                        if ($targetRes.PingAvgMs -ne $null) {
+                            $a.PingTotalMs += $targetRes.PingAvgMs
+                            $a.PingCount++
+                        }
+                    } else {
+                        $a.PingFail++
+                    }
+                }
+            } elseif ($res.Type -eq 'dpi') {
+                foreach ($targetRes in $res.Results) {
+                    foreach ($line in $targetRes.Lines) {
+                        if ($line.Status -eq "OK")            { $a.DPI_OK++ }
+                        elseif ($line.Status -eq "FAIL")      { $a.DPI_FAIL++ }
+                        elseif ($line.Status -eq "UNSUPPORTED") { $a.DPI_UNSUP++ }
+                        elseif ($line.Status -eq "LIKELY_BLOCKED") { $a.DPI_BLOCKED++ }
+                    }
+                }
+            } elseif ($res.Type -eq 'combined') {
+                # DPI part
+                foreach ($targetRes in $res.Dpi) {
+                    foreach ($line in $targetRes.Lines) {
+                        if ($line.Status -eq "OK")            { $a.DPI_OK++ }
+                        elseif ($line.Status -eq "FAIL")      { $a.DPI_FAIL++ }
+                        elseif ($line.Status -eq "UNSUPPORTED") { $a.DPI_UNSUP++ }
+                        elseif ($line.Status -eq "LIKELY_BLOCKED") { $a.DPI_BLOCKED++ }
+                    }
+                }
+                # Standard part
+                foreach ($targetRes in $res.Std) {
+                    if ($targetRes.IsUrl) {
+                        foreach ($tok in $targetRes.HttpTokens) {
+                            if ($tok -match "OK")    { $a.HTTP_OK++ }
+                            elseif ($tok -match "SSL")   { $a.HTTP_ERR++ }
+                            elseif ($tok -match "ERROR") { $a.HTTP_ERR++ }
+                            elseif ($tok -match "UNSUP") { $a.HTTP_UNSUP++ }
+                        }
+                    }
+                    if ($targetRes.PingResult -ne "Timeout" -and $targetRes.PingResult -ne "n/a") {
+                        $a.PingOK++
+                        if ($targetRes.PingAvgMs -ne $null) {
+                            $a.PingTotalMs += $targetRes.PingAvgMs
+                            $a.PingCount++
+                        }
+                    } else {
+                        $a.PingFail++
+                    }
+                }
+            }
+        }
+
+        Write-Host ""
+        Write-Host "=== ANALYTICS ===" -ForegroundColor Cyan
+        foreach ($config in $analytics.Keys) {
+            $a = $analytics[$config]
+            $score = $a.DPI_OK + $a.PingOK
+            $avgPing = if ($a.PingCount -gt 0) { [math]::Round($a.PingTotalMs / $a.PingCount, 1) } else { $null }
+            $pingStr = if ($avgPing) { " avg_ping=${avgPing}ms" } else { "" }
+
+            if ($a.HTTP_OK -or $a.HTTP_ERR -or $a.HTTP_UNSUP) {
+                Write-Host "$config : DPI_OK=$($a.DPI_OK) BLOCKED=$($a.DPI_BLOCKED) | HTTP_OK=$($a.HTTP_OK) ERR=$($a.HTTP_ERR) UNSUP=$($a.HTTP_UNSUP) | PingOK=$($a.PingOK) Fail=$($a.PingFail)$pingStr" -ForegroundColor Yellow
+            } else {
+                Write-Host "$config : DPI_OK=$($a.DPI_OK) FAIL=$($a.DPI_FAIL) UNSUP=$($a.DPI_UNSUP) BLOCKED=$($a.DPI_BLOCKED) | PingOK=$($a.PingOK) Fail=$($a.PingFail)$pingStr" -ForegroundColor Yellow
+            }
+        }
+
+        # Best strategy: max (DPI_OK + DPI_FAIL + PingOK), tiebreaker = lowest avg ping
+        $bestConfig = $null
+        $maxScore = -1
+        $bestAvgPing = [double]::MaxValue
+        foreach ($config in $analytics.Keys) {
+            $a = $analytics[$config]
+            $score = $a.DPI_OK + $a.DPI_FAIL + $a.PingOK   # FAIL тоже считается баллом
+            $avgPing = if ($a.PingCount -gt 0) { $a.PingTotalMs / $a.PingCount } else { [double]::MaxValue }
+
+            if ($score -gt $maxScore -or ($score -eq $maxScore -and $avgPing -lt $bestAvgPing)) {
+                $maxScore = $score
+                $bestAvgPing = $avgPing
                 $bestConfig = $config
             }
         }
-    }
-    Write-Host ""
-    Write-Host "Best config: $bestConfig" -ForegroundColor Green
-    Write-Host ""
+        Write-Host ""
+        Write-Host "Best config: $bestConfig (Score: $maxScore, Avg Ping: $([math]::Round($bestAvgPing,1)) ms)" -ForegroundColor Green
 
-    # Save to file
-    $dateStr = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-    $resultFile = Join-Path $resultsDir "test_results_$dateStr.txt"
-    # Clear file
-    "" | Out-File $resultFile -Encoding UTF8
-    foreach ($res in $globalResults) {
-        $config = $res.Config
-        $type = $res.Type
-        $results = $res.Results
-        Add-Content $resultFile "Config: $config (Type: $type)"
-        if ($type -eq 'standard') {
-            foreach ($targetRes in $results) {
-                $name = $targetRes.Name
-                $http = $targetRes.HttpTokens -join ' '
-                $ping = $targetRes.PingResult
-                Add-Content $resultFile "  $name : $http | Ping: $ping"
+        # Save to file
+        $dateStr = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+        $resultFile = Join-Path $resultsDir "test_results_$dateStr.txt"
+        "" | Out-File $resultFile -Encoding UTF8
+        foreach ($res in $globalResults) {
+            $config = $res.Config
+            $type = $res.Type
+            Add-Content $resultFile "Config: $config (Type: $type)"
+            if ($type -eq 'standard') {
+                foreach ($targetRes in $res.Results) {
+                    $name = $targetRes.Name
+                    $http = $targetRes.HttpTokens -join ' '
+                    $ping = $targetRes.PingResult
+                    Add-Content $resultFile "  $name : $http | Ping: $ping"
+                }
+            } elseif ($type -eq 'dpi') {
+                foreach ($targetRes in $res.Results) {
+                    $id = $targetRes.TargetId
+                    $provider = $targetRes.Provider
+                    $country = $targetRes.Country
+                    if ($country) {
+                        Add-Content $resultFile "  Target: [$country] $id ($provider)"
+                    } else {
+                        Add-Content $resultFile "  Target: $id ($provider)"
+                    }
+                    foreach ($line in $targetRes.Lines) {
+                        $test = $line.TestLabel
+                        $code = $line.Code
+                        $up = $line.UpKB
+                        $down = $line.DownKB
+                        $time = $line.Time
+                        $status = $line.Status
+                        Add-Content $resultFile "    ${test}: code=${code}  up=${up} KB  down=${down} KB  time=${time}s  status=${status}"
+                    }
+                }
+            } elseif ($type -eq 'combined') {
+                Add-Content $resultFile "  --- DPI results ---"
+                foreach ($targetRes in $res.Dpi) {
+                    $id = $targetRes.TargetId
+                    $provider = $targetRes.Provider
+                    $country = $targetRes.Country
+                    if ($country) {
+                        Add-Content $resultFile "  Target: [$country] $id ($provider)"
+                    } else {
+                        Add-Content $resultFile "  Target: $id ($provider)"
+                    }
+                    foreach ($line in $targetRes.Lines) {
+                        $test = $line.TestLabel
+                        $code = $line.Code
+                        $up = $line.UpKB
+                        $down = $line.DownKB
+                        $time = $line.Time
+                        $status = $line.Status
+                        Add-Content $resultFile "    ${test}: code=${code}  up=${up} KB  down=${down} KB  time=${time}s  status=${status}"
+                    }
+                }
+                Add-Content $resultFile "  --- Standard results ---"
+                foreach ($targetRes in $res.Std) {
+                    $name = $targetRes.Name
+                    $http = $targetRes.HttpTokens -join ' '
+                    $ping = $targetRes.PingResult
+                    Add-Content $resultFile "  $name : $http | Ping: $ping"
+                }
             }
-        } elseif ($type -eq 'dpi') {
-            foreach ($targetRes in $results) {
-                $id = $targetRes.TargetId
-                $provider = $targetRes.Provider
-                $country = $targetRes.Country
-                if ($country) {
-                    Add-Content $resultFile "  Target: [$country] $id ($provider)"
-                } else {
-                    Add-Content $resultFile "  Target: $id ($provider)"
-                }
-                foreach ($line in $targetRes.Lines) {
-                    $test = $line.TestLabel
-                    $code = $line.Code
-                    $up = $line.UpKB
-                    $down = $line.DownKB
-                    $time = $line.Time
-                    $status = $line.Status
-                    Add-Content $resultFile "    ${test}: code=${code}  up=${up} KB  down=${down} KB  time=${time}s  status=${status}"
-                }
+            Add-Content $resultFile ""
+        }
+
+        # Analytics to file
+        Add-Content $resultFile "=== ANALYTICS ==="
+        foreach ($config in $analytics.Keys) {
+            $a = $analytics[$config]
+            $score = $a.DPI_OK + $a.DPI_FAIL + $a.PingOK
+            $avgPing = if ($a.PingCount -gt 0) { [math]::Round($a.PingTotalMs / $a.PingCount, 1) } else { "N/A" }
+            if ($a.HTTP_OK -or $a.HTTP_ERR -or $a.HTTP_UNSUP) {
+                Add-Content $resultFile "$config : DPI_OK=$($a.DPI_OK) BLOCKED=$($a.DPI_BLOCKED) | HTTP_OK=$($a.HTTP_OK) ERR=$($a.HTTP_ERR) UNSUP=$($a.HTTP_UNSUP) | PingOK=$($a.PingOK) Fail=$($a.PingFail) avg_ping=${avgPing}ms"
+            } else {
+                Add-Content $resultFile "$config : DPI_OK=$($a.DPI_OK) FAIL=$($a.DPI_FAIL) UNSUP=$($a.DPI_UNSUP) BLOCKED=$($a.DPI_BLOCKED) | PingOK=$($a.PingOK) Fail=$($a.PingFail) avg_ping=${avgPing}ms"
             }
         }
-        Add-Content $resultFile ""
-    }
+        Add-Content $resultFile "Best strategy: $bestConfig (Score: $maxScore, Avg Ping: $([math]::Round($bestAvgPing,1)) ms)"
 
-    # Add analytics
-    Add-Content $resultFile "=== ANALYTICS ==="
-    foreach ($config in $analytics.Keys) {
-        $a = $analytics[$config]
-        if ($a.ContainsKey('PingOK')) {
-            Add-Content $resultFile "$config : HTTP OK: $($a.OK), ERR: $($a.ERROR), UNSUP: $($a.UNSUP), Ping OK: $($a.PingOK), Fail: $($a.PingFail)"
-        } else {
-            Add-Content $resultFile "$config : OK: $($a.OK), FAIL: $($a.FAIL), UNSUP: $($a.UNSUPPORTED), BLOCKED: $($a.LIKELY_BLOCKED)"
+        Write-Host "Results saved to $resultFile" -ForegroundColor Green
+
+    } catch {
+        Write-Host "[ERROR] An error occurred during tests. Restoring ipset..." -ForegroundColor Red
+        if ($originalIpsetStatus -and $originalIpsetStatus -ne "any") {
+            Set-IpsetMode -mode "restore"
         }
+        Remove-Item -Path $ipsetFlagFile -ErrorAction SilentlyContinue
+    } finally {
+        Stop-Zapret
+        Restore-WinwsSnapshot -snapshot $originalWinws
+        if ($originalIpsetStatus -ne "any") {
+            Write-Host "[INFO] Restoring original ipset mode..." -ForegroundColor DarkGray
+            Set-IpsetMode -mode "restore"
+        }
+        Remove-Item -Path $ipsetFlagFile -ErrorAction SilentlyContinue
     }
-
-    Add-Content $resultFile "Best strategy: $bestConfig"
-
-    Write-Host "Results saved to $resultFile" -ForegroundColor Green
-
-} catch {
-    Write-Host "[ERROR] An error occurred during tests. Restoring ipset..." -ForegroundColor Red
-    if ($originalIpsetStatus -and $originalIpsetStatus -ne "any") {
-        Set-IpsetMode -mode "restore"
-    }
-    Remove-Item -Path $ipsetFlagFile -ErrorAction SilentlyContinue
-} finally {
-    Stop-Zapret
-    Restore-WinwsSnapshot -snapshot $originalWinws
-    if ($originalIpsetStatus -ne "any") {
-        Write-Host "[INFO] Restoring original ipset mode..." -ForegroundColor DarkGray
-        Set-IpsetMode -mode "restore"
-    }
-    Remove-Item -Path $ipsetFlagFile -ErrorAction SilentlyContinue
-}
 
     Write-Host "Press any key to close..." -ForegroundColor Yellow
     [void][System.Console]::ReadKey($true)
