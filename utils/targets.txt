@@ -33,6 +33,36 @@ CloudflareDNS1001     = "PING:1.0.0.1"
 GoogleDNS8888         = "PING:8.8.8.8"
 GoogleDNS8844         = "PING:8.8.4.4"
 Quad9DNS9999          = "PING:9.9.9.9"
+XBoxDNS1 = "PING:111.88.96.50"
+XBoxDNS2 = "PING:111.88.96.51"
 
 ### Github
 ReleaseGithub = "https://release-assets.githubusercontent.com"
+
+### Telegram
+TelegramWeb           = "https://web.telegram.org"
+TelegramOrg           = "https://telegram.org"
+TelegramShort         = "https://t.me"
+TelegramDownloads     = "https://api.telegram.org"
+TelegramCDN           = "https://cdn-telegram.org" 
+TelegramTelesco       = "https://telesco.pe"
+TelegramEmojiCDN      = "https://emoji.cdn-telegram.org"
+
+### Roblox
+Roblox           = "https://www.roblox.com"
+Roblox_Auth     = "https://auth.roblox.com"
+Roblox_Ecomony     = "https://economy.roblox.com"
+
+### PKG Zone
+PKGZoneMain           = "https://pkg-zone.com"
+
+# Gamedrive(like Torrent) 
+GameDrive = "https://gamedrive.org"
+GameDriveDownload = "https://linkvault.cybar.to"
+GameDriveDownload2 = "https://torrent.cybar.to"
+
+# GoFile
+GoFile = "https://gofile.io"
+GoFileDownload = "https://file-na-lax-1.gofile.io"
+# XBox DNS Site
+XBoxDNSSite = "https://xbox-dns.ru"
