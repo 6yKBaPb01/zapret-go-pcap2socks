@@ -1,5 +1,5 @@
 @echo off
-set "LOCAL_VERSION=v1.6b"
+set "LOCAL_VERSION=v1.7b"
 
 :: External commands
 if "%~1"=="status_zapret" (
@@ -64,7 +64,7 @@ set "menu_choice=null"
 
 echo.
 echo   ZAPRET-GO-PCAP2SOCKS !LOCAL_VERSION!
-echo   Strategy: !CurrentStrategy!
+echo   Installed Strategy: !CurrentStrategy!
 echo   ----------------------------------------
 echo.
 echo   :: SERVICE
