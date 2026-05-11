@@ -30,8 +30,17 @@
 
 **Подробнее:** [github.com/DaniilSokolyuk/go-pcap2socks](https://github.com/DaniilSokolyuk/go-pcap2socks)
 
-### 🔹 zapret
-DPI‑дурилка (инструмент обхода блокировок). Мгновенно восстанавливает доступ к YouTube, Discord и другим сервисам, которые подвергаются глубокой инспекции пакетов.
+### 🔹 zapret-discord-youtube
+Взят тут:[zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube). DPI‑дурилка (инструмент обхода блокировок). Мгновенно восстанавливает доступ к YouTube, Discord и другим сервисам, которые подвергаются глубокой инспекции пакетов.
+
+### 🔹 blockcheck
+Этот инструмент был взят из [zapret-win-bundle](https://github.com/bol-van/zapret-win-bundle). Он помогает найти лучшую стратегию для вас. Если что, вы можете опубликовать через Pull Request или в Issues
+
+### 🔹 AS Parser
+Скрипт был взят из [IPSets-For-Bypass-in-Russia](https://github.com/V3nilla/IPSets-For-Bypass-in-Russia). Позволяет найти новые IP адреса с помощью ASN (автономные системы IP).
+
+### 🔹 TG WS Proxy
+Приложение было взято: [TG WS Proxy](https://github.com/Flowseal/tg-ws-proxy). Создаёт локальный прокси для обхода блокировки Telegram.
 
 ---
 
@@ -40,7 +49,8 @@ DPI‑дурилка (инструмент обхода блокировок). �
 Проект основан на двух исходных работах, каждая со своей лицензией:
 
 - **go-pcap2socks** – [GPL-3.0 License](https://github.com/DaniilSokolyuk/go-pcap2socks?tab=GPL-3.0-1-ov-file#readme)  
-- **zapret-discord-youtube** – [MIT License](https://github.com/Flowseal/zapret-discord-youtube?tab=License-1-ov-file#readme)
+- **zapret-discord-youtube** – [Other License](https://github.com/Flowseal/zapret-discord-youtube?tab=License-1-ov-file#readme)
+- **TG WS Proxy** - [MIT License](https://github.com/Flowseal/tg-ws-proxy?tab=MIT-1-ov-file)
 
 Пожалуйста, соблюдайте условия обеих лицензий при использовании и распространении.
 
@@ -53,6 +63,6 @@ git clone "https://github.com/6yKBaPb01/zapret-go-pcap2socks_windows_amd64"
 ```
 
 ## 💬 Поддержка:
-Если что‑то не работает — создайте обращение в разделе Issues или свяжитесь со мной в Discord: 6yKBaPb01. Или в Telegram: ```@githuber6ykb```
+Если что‑то не работает — создайте обращение в разделе Issues или свяжитесь со мной в Discord: 6yKBaPb01 или 6yKBaPbRL. Или в Telegram: ```@githuber6ykb```
 
 <picture> <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&theme=dark&legend=top-left" /> <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&legend=top-left" /> <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=6yKBaPb01/zapret-go-pcap2socks&type=date&legend=top-left" /> </picture>
