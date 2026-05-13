@@ -1055,6 +1055,14 @@ goto menu
 cls
 chcp 437 >nul
 echo Starting go-pcap2socks...
+
+tasklist /FI "IMAGENAME eq go-pcap2socks.exe" 2>nul | find /I "go-pcap2socks.exe" >nul
+if not errorlevel 1 (
+    call :PrintYellow "go-pcap2socks.exe is already running!"
+    pause
+    goto menu
+)
+
 if exist "%~dp0utils\go-pcap2socks.exe" (
     start "" "%~dp0utils\go-pcap2socks.exe"
     echo Launched. Check its window.
@@ -1068,25 +1076,92 @@ goto menu
 cls
 chcp 437 >nul
 echo Starting TG WS Proxy...
-if exist "%~dp0utils\TgWsProxy_windows.exe" (
-    start "" "%~dp0utils\TgWsProxy_windows.exe"
-    echo Launched. Make sure the proxy is enabled in the application settings.
-) else (
-    call :PrintRed "TgWsProxy_windows.exe not found in utils!"
-)
-pause
-goto menu
 
-:as_parser
-cls
-chcp 437 >nul
-echo Launching AS Parser...
-set "AS_PARSER=%~dp0utils\as_parser.py"
-if not exist "%AS_PARSER%" (
-    call :PrintRed "as_parser.py not found in utils!"
+tasklist /FI "IMAGENAME eq TgWsProxy_windows.exe" 2>nul | find /I "TgWsProxy_windows.exe" >nul
+if not errorlevel 1 (
+    call :PrintYellow "TgWsProxy_windows.exe is already running!"
     pause
     goto menu
 )
+
+if not exist "%~dp0utils\TgWsProxy_windows.exe" (
+    call :PrintRed "TgWsProxy_windows.exe not found in utils!"
+    pause
+    goto menu
+)
+
+:: Подготавливаем папку конфигурации
+set "TG_APPDIR=%APPDATA%\TgWsProxy"
+if not exist "%TG_APPDIR%" mkdir "%TG_APPDIR%"
+
+:: Пустые маркерные файлы (если их нет)
+if not exist "%TG_APPDIR%\.first_run_done_mtproto" type nul > "%TG_APPDIR%\.first_run_done_mtproto"
+if not exist "%TG_APPDIR%\.ipv6_warned" type nul > "%TG_APPDIR%\.ipv6_warned"
+
+:: Эталонный конфиг (JSON)
+set "TG_CONFIG=%TG_APPDIR%\config.json"
+set "TG_CONFIG_NEW=%TEMP%\tg_config_new.json"
+(
+echo {
+echo   "host": "0.0.0.0",
+echo   "port": 1443,
+echo   "secret": "...",
+echo   "dc_ip": [
+echo     "2:149.154.167.220",
+echo     "4:149.154.167.220"
+echo   ],
+echo   "verbose": false,
+echo   "autostart": false,
+echo   "buf_kb": 256,
+echo   "pool_size": 4,
+echo   "log_max_mb": 5.0,
+echo   "check_updates": true,
+echo   "cfproxy": true,
+echo   "cfproxy_priority": true,
+echo   "cfproxy_user_domain": "",
+echo   "appearance": "auto"
+echo }
+) > "%TG_CONFIG_NEW%"
+
+:: Если config.json отсутствует или отличается – обновляем
+set "UPDATE_CONFIG=0"
+if not exist "%TG_CONFIG%" (
+    set "UPDATE_CONFIG=1"
+) else (
+    fc /b "%TG_CONFIG%" "%TG_CONFIG_NEW%" >nul 2>&1
+    if errorlevel 1 set "UPDATE_CONFIG=1"
+)
+if "!UPDATE_CONFIG!"=="1" (
+    echo Updating config.json...
+    copy /y "%TG_CONFIG_NEW%" "%TG_CONFIG%" >nul
+    call :PrintYellow "config.json has been created/updated."
+)
+del "%TG_CONFIG_NEW%" 2>nul
+
+:: Запуск программы
+start "" "%~dp0utils\TgWsProxy_windows.exe"
+echo Launched. Make sure the proxy is enabled in the application settings.
+
+:: Определяем локальный IPv4 адрес (не loopback)
+set "TG_IP="
+for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /r "IPv4"') do (
+    set "TEMP_IP=%%a"
+    set "TEMP_IP=!TEMP_IP: =!"
+    if not "!TEMP_IP!"=="" if not "!TEMP_IP!"=="127.0.0.1" (
+        set "TG_IP=!TEMP_IP!"
+        goto :found_ip
+    )
+)
+:found_ip
+if defined TG_IP (
+    echo Your proxy: %TG_IP%:1443
+) else (
+    echo Could not determine local IP. Check ipconfig.
+    echo Your proxy port: 1443
+)
+
+pause
+goto menu
 
 :: Python check + auto-install if missing
 where python >nul 2>&1
@@ -1111,6 +1186,58 @@ if errorlevel 1 (
 )
 
 python "%AS_PARSER%"
+pause
+goto menu
+
+:: BLOCKCHECK MENU =====================
+:blockcheck_menu
+cls
+chcp 437 > nul
+set "BC_DIR=C:\Users\vadim\Documents\GitHub\zapret-go-pcap2socks\blockcheck"
+echo.
+echo   Select BlockCheck variant:
+echo     1. blockcheck
+echo     2. blockcheck with Kyber
+echo     3. blockcheck2
+echo     4. blockcheck2 with Kyber
+echo.
+set "bc_choice="
+set /p "bc_choice=   Choose (1-4, 0 to cancel): "
+if "%bc_choice%"=="0" goto menu
+
+set "blockfile="
+if "%bc_choice%"=="1" set "blockfile=blockcheck.cmd"
+if "%bc_choice%"=="2" set "blockfile=blockcheck-kyber.cmd"
+if "%bc_choice%"=="3" set "blockfile=blockcheck2.cmd"
+if "%bc_choice%"=="4" set "blockfile=blockcheck2-kyber.cmd"
+
+if not defined blockfile (
+    echo Invalid choice.
+    pause
+    goto menu
+)
+
+set "fullpath=%BC_DIR%\%blockfile%"
+if not exist "%fullpath%" (
+    echo File not found: "%fullpath%"
+    pause
+    goto menu
+)
+
+:: Уникальный флаг для каждого варианта
+set "FLAG_FILE=%TEMP%\blockcheck_%bc_choice%.flag"
+if exist "%FLAG_FILE%" (
+    call :PrintYellow "%blockfile% is already running!"
+    pause
+    goto menu
+)
+
+:: Создаём флаг
+type nul > "%FLAG_FILE%"
+
+:: Запускаем в новом окне, флаг удалится после завершения
+start "BlockCheck %bc_choice%" cmd /c "call "%fullpath%" & del "%FLAG_FILE%" & pause"
+echo %blockfile% launched in a new window.
 pause
 goto menu
 
