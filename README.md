@@ -8,6 +8,9 @@
   <img src="https://img.shields.io/badge/license-GPL%203.0%20%2F%20MIT-green" alt="License" />
 </p>
 
+> [!NOTE]
+> Чтобы TG WS Proxy заработал на всех устройствах, поставьте IP на 0.0.0.0. Он автоматически укажет ваш локальный IP.
+
 > [!WARNING]
 > Антивирус может ложно определять **zapret-discord-youtube** как вредоносное ПО.  
 > Это известная проблема, можете исключить детект или выключить антивирус на время установки. Подробнее: [zapret-win-bundle readme](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md).
