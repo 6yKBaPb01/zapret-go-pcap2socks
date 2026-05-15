@@ -1105,7 +1105,7 @@ set "TG_CONFIG_NEW=%TEMP%\tg_config_new.json"
 echo {
 echo   "host": "0.0.0.0",
 echo   "port": 1443,
-echo   "secret": "...",
+echo   "secret": "4c35e70703b5172ac71ad26335df4cb0 ",
 echo   "dc_ip": [
 echo     "2:149.154.167.220",
 echo     "4:149.154.167.220"
@@ -1142,24 +1142,16 @@ del "%TG_CONFIG_NEW%" 2>nul
 start "" "%~dp0utils\TgWsProxy_windows.exe"
 echo Launched. Make sure the proxy is enabled in the application settings.
 
-:: Определяем локальный IPv4 адрес (не loopback)
+:: Определяем локальный IPv4 адрес через PowerShell (Get-WmiObject – работает везде)
 set "TG_IP="
-for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /r "IPv4"') do (
-    set "TEMP_IP=%%a"
-    set "TEMP_IP=!TEMP_IP: =!"
-    if not "!TEMP_IP!"=="" if not "!TEMP_IP!"=="127.0.0.1" (
-        set "TG_IP=!TEMP_IP!"
-        goto :found_ip
-    )
-)
-:found_ip
+for /f "delims=" %%a in ('powershell -NoProfile -Command "$nic = Get-WmiObject Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled -eq $true -and $_.DefaultIPGateway -ne $null }; if ($nic) { $nic.IPAddress[0] } else { 'none' }" 2^>nul') do set "TG_IP=%%a"
+if "%TG_IP%"=="none" set "TG_IP="
 if defined TG_IP (
     echo Your proxy: %TG_IP%:1443
 ) else (
     echo Could not determine local IP. Check ipconfig.
     echo Your proxy port: 1443
 )
-
 pause
 goto menu
 
