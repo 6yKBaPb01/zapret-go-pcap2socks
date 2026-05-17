@@ -11,6 +11,8 @@ cloudflare-dns.com
 api.segment.io
 2.datadog.pool.ntp.org
 3.datadog.pool.ntp.org
+my.microsoftpersonalcontent.com
+file-na-lax-1.gofile.io
 ab.chatgpt.com
 ffzap.com
 emoji.cdn-telegram.org
