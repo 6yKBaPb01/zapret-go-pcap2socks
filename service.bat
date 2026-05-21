@@ -1,5 +1,5 @@
 @echo off
-set "LOCAL_VERSION=v1.8b"
+set "LOCAL_VERSION=v1.9"
 
 :: External commands
 if "%~1"=="status_zapret" (
@@ -60,11 +60,19 @@ call :game_switch_status
 call :check_updates_switch_status
 call :get_strategy_name
 
+:: Проверим, запущены ли процессы
+set "GopcapStatus=NOT RUNNING"
+tasklist /FI "IMAGENAME eq go-pcap2socks.exe" 2>nul | find /I "go-pcap2socks.exe" >nul && set "GopcapStatus=RUNNING"
+set "TgWsStatus=NOT RUNNING"
+tasklist /FI "IMAGENAME eq TgWsProxy_windows.exe" 2>nul | find /I "TgWsProxy_windows.exe" >nul && set "TgWsStatus=RUNNING"
+
 set "menu_choice=null"
 
 echo.
 echo   ZAPRET-GO-PCAP2SOCKS !LOCAL_VERSION!
-echo   Installed Strategy: !CurrentStrategy!
+echo   Installed strategy: !CurrentStrategy!
+echo   TG WS Proxy: !TgWsStatus!
+echo   go-pcap2socks: !GopcapStatus!
 echo   ----------------------------------------
 echo.
 echo   :: SERVICE
@@ -76,25 +84,26 @@ echo   :: SETTINGS
 echo      4. Game Filter         [!GameFilterStatus!]
 echo      5. IPSet Filter        [!IPsetStatus!]
 echo      6. Auto-Update Check   [!CheckUpdatesStatus!]
+echo      7. Autostart Settings
 echo.
 echo   :: UPDATES
-echo      7. Update IPSet List
-echo      8. Update Hosts File
-echo      9. Check for Updates
+echo      8. Update IPSet List
+echo      9. Update Hosts File
+echo      10. Check for Updates
 echo.
 echo   :: TOOLS
-echo      10. Run Diagnostics
-echo      11. Run Tests
-echo      12. Start go-pcap2socks
-echo      13. Start TG WS Proxy
-echo      14. AS Parser
-echo      15. Start BlockCheck
+echo      11. Run Diagnostics
+echo      12. Run Tests
+echo      13. Start go-pcap2socks
+echo      14. Start TG WS Proxy
+echo      15. AS Parser
+echo      16. Start BlockCheck
 echo.
 echo   ----------------------------------------
 echo      0. Exit
 echo.
 
-set /p menu_choice=   Select option (0-15): 
+set /p menu_choice=   Select option (0-16): 
 
 if "%menu_choice%"=="1" goto service_install
 if "%menu_choice%"=="2" goto service_remove
@@ -102,15 +111,16 @@ if "%menu_choice%"=="3" goto service_status
 if "%menu_choice%"=="4" goto game_switch
 if "%menu_choice%"=="5" goto ipset_switch
 if "%menu_choice%"=="6" goto check_updates_switch
-if "%menu_choice%"=="7" goto ipset_update
-if "%menu_choice%"=="8" goto hosts_update
-if "%menu_choice%"=="9" goto service_check_updates
-if "%menu_choice%"=="10" goto service_diagnostics
-if "%menu_choice%"=="11" goto run_tests
-if "%menu_choice%"=="12" goto start_gopcap
-if "%menu_choice%"=="13" goto start_tgwsproxy
-if "%menu_choice%"=="14" goto as_parser
-if "%menu_choice%"=="15" goto blockcheck_menu
+if "%menu_choice%"=="7" goto autostart_settings
+if "%menu_choice%"=="8" goto ipset_update
+if "%menu_choice%"=="9" goto hosts_update
+if "%menu_choice%"=="10" goto service_check_updates
+if "%menu_choice%"=="11" goto service_diagnostics
+if "%menu_choice%"=="12" goto run_tests
+if "%menu_choice%"=="13" goto start_gopcap
+if "%menu_choice%"=="14" goto start_tgwsproxy
+if "%menu_choice%"=="15" goto as_parser
+if "%menu_choice%"=="16" goto blockcheck_menu
 if "%menu_choice%"=="0" exit /b
 goto menu
 
@@ -1063,12 +1073,50 @@ if not errorlevel 1 (
     goto menu
 )
 
-if exist "%~dp0utils\go-pcap2socks.exe" (
-    start "" "%~dp0utils\go-pcap2socks.exe"
-    echo Launched. Check its window.
-) else (
+if not exist "%~dp0utils\go-pcap2socks.exe" (
     call :PrintRed "go-pcap2socks.exe not found in utils!"
+    pause
+    goto menu
 )
+
+set "STARTUP_DIR=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+set "GOPCAP_LNK=%STARTUP_DIR%\go-pcap2socks.lnk"
+set "GOPCAP_AUTO_FLAG=%~dp0utils\go-pcap_auto"
+
+:: Если ярлык существует, а флага нет – восстановим флаг (синхронизация)
+if exist "%GOPCAP_LNK%" (
+    if not exist "%GOPCAP_AUTO_FLAG%" type nul > "%GOPCAP_AUTO_FLAG%"
+)
+
+set "ASK_AUTOSTART=1"
+if exist "%GOPCAP_AUTO_FLAG%" set "ASK_AUTOSTART=0"
+
+if "!ASK_AUTOSTART!"=="1" (
+    set "AUTOSTART_GOPCAP=N"
+    set /p "AUTOSTART_GOPCAP=Add go-pcap2socks to Startup? (Y/N, default N): "
+    if /i "!AUTOSTART_GOPCAP!"=="Y" (
+        if not exist "%STARTUP_DIR%" mkdir "%STARTUP_DIR%"
+        powershell -NoProfile -Command ^
+            "$ws = New-Object -ComObject WScript.Shell; " ^
+            "$s = $ws.CreateShortcut('%GOPCAP_LNK%'); " ^
+            "$s.TargetPath = '%~dp0utils\go-pcap2socks.exe'; " ^
+            "$s.WorkingDirectory = '%~dp0utils'; " ^
+            "$s.Save();"
+        if exist "%GOPCAP_LNK%" (
+            type nul > "%GOPCAP_AUTO_FLAG%"
+            echo Autostart enabled.
+        ) else (
+            call :PrintRed "Failed to create shortcut."
+        )
+    ) else (
+        if exist "%GOPCAP_LNK%" del "%GOPCAP_LNK%"
+        if exist "%GOPCAP_AUTO_FLAG%" del "%GOPCAP_AUTO_FLAG%"
+        echo Autostart skipped.
+    )
+)
+
+start "" "%~dp0utils\go-pcap2socks.exe"
+echo Launched.
 pause
 goto menu
 
@@ -1090,28 +1138,54 @@ if not exist "%~dp0utils\TgWsProxy_windows.exe" (
     goto menu
 )
 
-:: Подготавливаем папку конфигурации
+set "STARTUP_DIR=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+set "TGWS_LNK=%STARTUP_DIR%\TgWsProxy.lnk"
+set "TG_WS_FLAG_CONFIG=%~dp0utils\tg_ws_proxy_config"
+set "TG_WS_FLAG_AUTO=%~dp0utils\tg_ws_proxy_auto"
 set "TG_APPDIR=%APPDATA%\TgWsProxy"
-if not exist "%TG_APPDIR%" mkdir "%TG_APPDIR%"
+set "TG_CONFIG=%TG_APPDIR%\config.json"
 
-:: Пустые маркерные файлы (если их нет)
+:: Синхронизация: если конфиг существует и не содержит заглушки "...", а флага конфигурации нет – создадим флаг и пропустим настройку
+if not exist "%TG_WS_FLAG_CONFIG%" (
+    if exist "%TG_CONFIG%" (
+        findstr /c:"""secret"": ""...""" "%TG_CONFIG%" >nul 2>&1
+        if errorlevel 1 (
+            type nul > "%TG_WS_FLAG_CONFIG%"
+            goto :tgws_run
+        )
+    )
+)
+
+:: Если флаг есть – сразу к запуску
+if exist "%TG_WS_FLAG_CONFIG%" goto :tgws_run
+
+:: ---------- Первая настройка ----------
+:: 1. Папка и маркеры
+if not exist "%TG_APPDIR%" mkdir "%TG_APPDIR%"
 if not exist "%TG_APPDIR%\.first_run_done_mtproto" type nul > "%TG_APPDIR%\.first_run_done_mtproto"
 if not exist "%TG_APPDIR%\.ipv6_warned" type nul > "%TG_APPDIR%\.ipv6_warned"
 
-:: Эталонный конфиг (JSON)
-set "TG_CONFIG=%TG_APPDIR%\config.json"
+:: 2. Автозапуск
+set "AUTOSTART_CFG=false"
+set /p "AUTOSTART_CFG=Enable autostart in config.json? (Y/N, default N): "
+if /i "!AUTOSTART_CFG!"=="Y" set "AUTOSTART_CFG=true"
+
+:: 3. Фиксированный секрет
+set "FIXED_SECRET=4c35e70703b5172ac71ad26335df4cb0"
+
+:: 4. Формируем конфиг
 set "TG_CONFIG_NEW=%TEMP%\tg_config_new.json"
 (
 echo {
 echo   "host": "0.0.0.0",
 echo   "port": 1443,
-echo   "secret": "4c35e70703b5172ac71ad26335df4cb0 ",
+echo   "secret": "!FIXED_SECRET!",
 echo   "dc_ip": [
 echo     "2:149.154.167.220",
 echo     "4:149.154.167.220"
 echo   ],
 echo   "verbose": false,
-echo   "autostart": false,
+echo   "autostart": !AUTOSTART_CFG!,
 echo   "buf_kb": 256,
 echo   "pool_size": 4,
 echo   "log_max_mb": 5.0,
@@ -1119,11 +1193,12 @@ echo   "check_updates": true,
 echo   "cfproxy": true,
 echo   "cfproxy_priority": true,
 echo   "cfproxy_user_domain": "",
+echo   "cfproxy_worker_domain": "holy-resonance-4dbd.ad-6ykbapb.workers.dev",
 echo   "appearance": "auto"
 echo }
 ) > "%TG_CONFIG_NEW%"
 
-:: Если config.json отсутствует или отличается – обновляем
+:: Сверяем
 set "UPDATE_CONFIG=0"
 if not exist "%TG_CONFIG%" (
     set "UPDATE_CONFIG=1"
@@ -1134,24 +1209,52 @@ if not exist "%TG_CONFIG%" (
 if "!UPDATE_CONFIG!"=="1" (
     echo Updating config.json...
     copy /y "%TG_CONFIG_NEW%" "%TG_CONFIG%" >nul
-    call :PrintYellow "config.json has been created/updated."
+    call :PrintYellow "config.json has been updated."
+) else (
+    echo config.json is already up to date.
 )
 del "%TG_CONFIG_NEW%" 2>nul
 
-:: Запуск программы
-start "" "%~dp0utils\TgWsProxy_windows.exe"
-echo Launched. Make sure the proxy is enabled in the application settings.
+:: Запомнили, что настройка выполнена
+type nul > "%TG_WS_FLAG_CONFIG%"
 
-:: Определяем локальный IPv4 адрес через PowerShell (Get-WmiObject – работает везде)
+:: Автозапуск через ярлык
+if /i "!AUTOSTART_CFG!"=="true" (
+    if not exist "%STARTUP_DIR%" mkdir "%STARTUP_DIR%"
+    powershell -NoProfile -Command ^
+        "$ws = New-Object -ComObject WScript.Shell; " ^
+        "$s = $ws.CreateShortcut('%TGWS_LNK%'); " ^
+        "$s.TargetPath = '%~dp0utils\TgWsProxy_windows.exe'; " ^
+        "$s.WorkingDirectory = '%~dp0utils'; " ^
+        "$s.Save();"
+    if exist "%TGWS_LNK%" (
+        type nul > "%TG_WS_FLAG_AUTO%"
+        echo Autostart enabled.
+    ) else (
+        call :PrintRed "Failed to create shortcut."
+    )
+) else (
+    if exist "%TGWS_LNK%" del "%TGWS_LNK%"
+    if exist "%TG_WS_FLAG_AUTO%" del "%TG_WS_FLAG_AUTO%"
+    echo Autostart skipped.
+)
+
+:tgws_run
+:: 5. Запуск и локальный IP
+start "" "%~dp0utils\TgWsProxy_windows.exe"
+echo Launched.
+
 set "TG_IP="
 for /f "delims=" %%a in ('powershell -NoProfile -Command "$nic = Get-WmiObject Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled -eq $true -and $_.DefaultIPGateway -ne $null }; if ($nic) { $nic.IPAddress[0] } else { 'none' }" 2^>nul') do set "TG_IP=%%a"
 if "%TG_IP%"=="none" set "TG_IP="
 if defined TG_IP (
     echo Your proxy: %TG_IP%:1443
+    echo Your secret: 4c35e70703b5172ac71ad26335df4cb0
 ) else (
     echo Could not determine local IP. Check ipconfig.
     echo Your proxy port: 1443
 )
+
 pause
 goto menu
 
@@ -1180,6 +1283,127 @@ if errorlevel 1 (
 python "%AS_PARSER%"
 pause
 goto menu
+
+:: AUTOSTART SETTINGS ==================
+:autostart_settings
+cls
+chcp 437 >nul
+set "STARTUP_DIR=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+set "GOPCAP_LNK=%STARTUP_DIR%\go-pcap2socks.lnk"
+set "TGWS_LNK=%STARTUP_DIR%\TgWsProxy.lnk"
+set "GOPCAP_AUTO_FLAG=%~dp0utils\go-pcap_auto"
+set "TG_WS_FLAG_AUTO=%~dp0utils\tg_ws_proxy_auto"
+set "TG_CONFIG=%APPDATA%\TgWsProxy\config.json"
+
+:: ---------- go-pcap2socks: статус по ярлыку ----------
+if exist "%GOPCAP_LNK%" (
+    set "GopcapAuto=Enabled"
+    if not exist "%GOPCAP_AUTO_FLAG%" type nul > "%GOPCAP_AUTO_FLAG%"
+) else (
+    set "GopcapAuto=Disabled"
+    if exist "%GOPCAP_AUTO_FLAG%" del "%GOPCAP_AUTO_FLAG%"
+)
+
+:: ---------- TG WS Proxy: статус по JSON полю "autostart" ----------
+set "TgWsAuto=Disabled"
+if exist "%TG_CONFIG%" (
+    powershell -NoProfile -Command ^
+        "$json = Get-Content '%TG_CONFIG%' -Raw | ConvertFrom-Json; " ^
+        "if ($json.autostart -eq $true) { exit 0 } else { exit 1 }" >nul 2>&1
+    if !errorlevel! equ 0 (
+        set "TgWsAuto=Enabled"
+        if not exist "%TG_WS_FLAG_AUTO%" type nul > "%TG_WS_FLAG_AUTO%"
+        if not exist "%TGWS_LNK%" (
+            if not exist "%STARTUP_DIR%" mkdir "%STARTUP_DIR%"
+            powershell -NoProfile -Command ^
+                "$ws = New-Object -ComObject WScript.Shell; " ^
+                "$s = $ws.CreateShortcut('%TGWS_LNK%'); " ^
+                "$s.TargetPath = '%~dp0utils\TgWsProxy_windows.exe'; " ^
+                "$s.WorkingDirectory = '%~dp0utils'; " ^
+                "$s.Save();"
+        )
+    ) else (
+        set "TgWsAuto=Disabled"
+        if exist "%TG_WS_FLAG_AUTO%" del "%TG_WS_FLAG_AUTO%"
+        if exist "%TGWS_LNK%" del "%TGWS_LNK%"
+    )
+)
+
+:autostart_menu
+cls
+echo.
+echo   --- Autostart Settings ---
+echo   1. go-pcap2socks  [%GopcapAuto%]
+echo   2. TG WS Proxy    [%TgWsAuto%]
+echo   0. Back
+echo.
+set "as_choice="
+set /p "as_choice=   Choose (1-2, 0 to back): "
+
+if "%as_choice%"=="0" goto menu
+if "%as_choice%"=="1" goto :toggle_gopcap_auto
+if "%as_choice%"=="2" goto :toggle_tgws_auto
+goto autostart_menu
+
+:toggle_gopcap_auto
+if exist "%GOPCAP_LNK%" (
+    echo Disabling autostart for go-pcap2socks...
+    del "%GOPCAP_LNK%"
+    if exist "%GOPCAP_AUTO_FLAG%" del "%GOPCAP_AUTO_FLAG%"
+    set "GopcapAuto=Disabled"
+    call :PrintYellow "Autostart disabled."
+) else (
+    echo Enabling autostart for go-pcap2socks...
+    if not exist "%STARTUP_DIR%" mkdir "%STARTUP_DIR%"
+    powershell -NoProfile -Command ^
+        "$ws = New-Object -ComObject WScript.Shell; " ^
+        "$s = $ws.CreateShortcut('%GOPCAP_LNK%'); " ^
+        "$s.TargetPath = '%~dp0utils\go-pcap2socks.exe'; " ^
+        "$s.WorkingDirectory = '%~dp0utils'; " ^
+        "$s.Save();"
+    if exist "%GOPCAP_LNK%" (
+        type nul > "%GOPCAP_AUTO_FLAG%"
+        set "GopcapAuto=Enabled"
+        call :PrintGreen "Autostart enabled."
+    ) else (
+        call :PrintRed "Failed to create shortcut."
+    )
+)
+pause
+goto autostart_menu
+
+:toggle_tgws_auto
+if "%TgWsAuto%"=="Enabled" (
+    echo Disabling autostart for TG WS Proxy...
+    powershell -NoProfile -Command ^
+        "$file = '%TG_CONFIG%'; " ^
+        "$json = Get-Content $file -Raw | ConvertFrom-Json; " ^
+        "$json.autostart = $false; " ^
+        "$json | ConvertTo-Json -Depth 10 | Set-Content $file"
+    del "%TGWS_LNK%" 2>nul
+    if exist "%TG_WS_FLAG_AUTO%" del "%TG_WS_FLAG_AUTO%"
+    set "TgWsAuto=Disabled"
+    call :PrintYellow "Autostart disabled."
+) else (
+    echo Enabling autostart for TG WS Proxy...
+    powershell -NoProfile -Command ^
+        "$file = '%TG_CONFIG%'; " ^
+        "$json = Get-Content $file -Raw | ConvertFrom-Json; " ^
+        "$json.autostart = $true; " ^
+        "$json | ConvertTo-Json -Depth 10 | Set-Content $file"
+    if not exist "%STARTUP_DIR%" mkdir "%STARTUP_DIR%"
+    powershell -NoProfile -Command ^
+        "$ws = New-Object -ComObject WScript.Shell; " ^
+        "$s = $ws.CreateShortcut('%TGWS_LNK%'); " ^
+        "$s.TargetPath = '%~dp0utils\TgWsProxy_windows.exe'; " ^
+        "$s.WorkingDirectory = '%~dp0utils'; " ^
+        "$s.Save();"
+    type nul > "%TG_WS_FLAG_AUTO%"
+    set "TgWsAuto=Enabled"
+    call :PrintGreen "Autostart enabled."
+)
+pause
+goto autostart_menu
 
 :: BLOCKCHECK MENU =====================
 :blockcheck_menu
