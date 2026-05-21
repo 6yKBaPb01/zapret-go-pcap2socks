@@ -198,3 +198,7 @@ avatars.cdn.boltgaming.io
 server.boltgaming.io
 fra01.metrics.ms.boltgaming.io
 edge.resources.cdn.boltgaming.io
+www.bluraycopys.com
+bluraycopys.com
+www.softportal.com
+softportal.com

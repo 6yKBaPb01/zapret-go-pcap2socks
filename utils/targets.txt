@@ -44,9 +44,7 @@ TelegramWeb           = "https://web.telegram.org"
 TelegramOrg           = "https://telegram.org"
 TelegramShort         = "https://t.me"
 TelegramDownloads     = "https://api.telegram.org"
-TelegramCDN           = "https://cdn-telegram.org" 
 TelegramTelesco       = "https://telesco.pe"
-TelegramEmojiCDN      = "https://emoji.cdn-telegram.org"
 
 ### Roblox
 Roblox           = "https://www.roblox.com"
