@@ -19,6 +19,11 @@ emoji.cdn-telegram.org
 spotify.com
 open.spotify.com
 byspotify.com
+arduino.cc
+www.arduino.cc
+create.arduino.cc
+projecthub.arduino.cc
+downloads.arduino.cc
 pscdn.co
 scdn.co
 spoti.fi

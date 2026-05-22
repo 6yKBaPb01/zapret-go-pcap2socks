@@ -1,5 +1,5 @@
 @echo off
-set "LOCAL_VERSION=v1.9"
+set "LOCAL_VERSION=v1.9b"
 
 :: External commands
 if "%~1"=="status_zapret" (
@@ -65,6 +65,11 @@ set "GopcapStatus=NOT RUNNING"
 tasklist /FI "IMAGENAME eq go-pcap2socks.exe" 2>nul | find /I "go-pcap2socks.exe" >nul && set "GopcapStatus=RUNNING"
 set "TgWsStatus=NOT RUNNING"
 tasklist /FI "IMAGENAME eq TgWsProxy_windows.exe" 2>nul | find /I "TgWsProxy_windows.exe" >nul && set "TgWsStatus=RUNNING"
+:: Статус WARP
+set "WarpStatus=NOT RUNNING"
+if exist "%~dp0utils\warp_configured" (
+    warp-cli status 2>nul | findstr /i "Connected" >nul && set "WarpStatus=RUNNING"
+)
 
 set "menu_choice=null"
 
@@ -73,6 +78,7 @@ echo   ZAPRET-GO-PCAP2SOCKS !LOCAL_VERSION!
 echo   Installed strategy: !CurrentStrategy!
 echo   TG WS Proxy: !TgWsStatus!
 echo   go-pcap2socks: !GopcapStatus!
+echo   WARP: !WarpStatus!
 echo   ----------------------------------------
 echo.
 echo   :: SERVICE
@@ -98,12 +104,13 @@ echo      13. Start go-pcap2socks
 echo      14. Start TG WS Proxy
 echo      15. AS Parser
 echo      16. Start BlockCheck
+echo      17. Start(Install) WARP
 echo.
 echo   ----------------------------------------
 echo      0. Exit
 echo.
 
-set /p menu_choice=   Select option (0-16): 
+set /p menu_choice=   Select option (0-17): 
 
 if "%menu_choice%"=="1" goto service_install
 if "%menu_choice%"=="2" goto service_remove
@@ -121,6 +128,7 @@ if "%menu_choice%"=="13" goto start_gopcap
 if "%menu_choice%"=="14" goto start_tgwsproxy
 if "%menu_choice%"=="15" goto as_parser
 if "%menu_choice%"=="16" goto blockcheck_menu
+if "%menu_choice%"=="17" goto warp_settings
 if "%menu_choice%"=="0" exit /b
 goto menu
 
@@ -1249,14 +1257,138 @@ for /f "delims=" %%a in ('powershell -NoProfile -Command "$nic = Get-WmiObject W
 if "%TG_IP%"=="none" set "TG_IP="
 if defined TG_IP (
     echo Your proxy: %TG_IP%:1443
-    echo Your secret: 4c35e70703b5172ac71ad26335df4cb0
+    echo Your secret(for mobile): dd4c35e70703b5172ac71ad26335df4cb0
+    echo Your secret(for PC): 4c35e70703b5172ac71ad26335df4cb0
 ) else (
     echo Could not determine local IP. Check ipconfig.
     echo Your proxy port: 1443
+    echo Your secret(for mobile): dd4c35e70703b5172ac71ad26335df4cb0
+    echo Your secret(for PC): 4c35e70703b5172ac71ad26335df4cb0
 )
 
 pause
 goto menu
+
+:: WARP SETTINGS =======================
+:warp_settings
+cls
+chcp 437 > nul
+echo   --- WARP Settings ---
+echo   1. Install WARP
+echo   2. Configure WARP
+echo   3. Connect
+echo   4. Disconnect
+echo   0. Back
+echo.
+set "ws_choice="
+set /p "ws_choice=   Choose (1-4, 0 to back): "
+if "%ws_choice%"=="0" goto menu
+if "%ws_choice%"=="1" goto install_warp
+if "%ws_choice%"=="2" goto configure_warp
+if "%ws_choice%"=="3" goto warp_connect
+if "%ws_choice%"=="4" goto warp_disconnect
+goto warp_settings
+
+:: ---------- 1. Просто запустить установщик ----------
+:install_warp
+cls
+set "WARP_MSI=%~dp0utils\Cloudflare_WARP_2026.4.1350.0.msi"
+if not exist "%WARP_MSI%" (
+    call :PrintRed "Installer not found: %WARP_MSI%"
+    pause
+    goto warp_settings
+)
+echo Starting WARP installer. Please complete the installation manually.
+start "" msiexec /i "%WARP_MSI%"
+echo After installation, return to menu and choose "Configure WARP".
+pause
+goto warp_settings
+
+:: ---------- 2. Автоконфигурация (после установки) ----------
+:configure_warp
+cls
+set "WARP_FLAG=%~dp0utils\warp_configured"
+if exist "%WARP_FLAG%" (
+    echo WARP is already configured.
+    pause
+    goto warp_settings
+)
+
+:: Проверяем наличие warp-cli
+where warp-cli >nul 2>&1
+if %errorlevel% neq 0 (
+    call :PrintRed "warp-cli not found. Please install WARP first (option 1)."
+    pause
+    goto warp_settings
+)
+
+echo Running auto-configuration...
+warp-cli registration new
+if errorlevel 1 (
+    call :PrintRed "Registration failed."
+    pause
+    goto warp_settings
+)
+
+warp-cli tunnel protocol set MASQUE
+if errorlevel 1 (
+    call :PrintRed "Failed to set MASQUE protocol."
+    pause
+    goto warp_settings
+)
+
+warp-cli tunnel masque-options set h2-only
+if errorlevel 1 (
+    call :PrintRed "Failed to set MASQUE options."
+    pause
+    goto warp_settings
+)
+
+type nul > "%WARP_FLAG%"
+call :PrintGreen "Configuration completed. WARP is ready."
+pause
+goto warp_settings
+
+:: ---------- 3. Connect ----------
+:warp_connect
+cls
+where warp-cli >nul 2>&1
+if errorlevel 1 (
+    call :PrintRed "warp-cli not found. Install and configure WARP first."
+    pause
+    goto warp_settings
+)
+if not exist "%~dp0utils\warp_configured" (
+    call :PrintRed "WARP is not configured yet. Use option 2 first."
+    pause
+    goto warp_settings
+)
+warp-cli connect
+if errorlevel 1 (
+    call :PrintRed "Failed to connect."
+) else (
+    call :PrintGreen "WARP is connecting..."
+)
+pause
+goto warp_settings
+
+:: ---------- 4. Disconnect ----------
+:warp_disconnect
+cls
+where warp-cli >nul 2>&1
+if errorlevel 1 (
+    call :PrintRed "warp-cli not found."
+    pause
+    goto warp_settings
+)
+warp-cli disconnect
+if errorlevel 1 (
+    call :PrintRed "Failed to disconnect."
+) else (
+    call :PrintGreen "WARP disconnected."
+)
+pause
+goto warp_settings
 
 :: Python check + auto-install if missing
 where python >nul 2>&1
