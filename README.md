@@ -13,7 +13,7 @@
 > Это известная особенность, подробнее: [zapret-win-bundle readme](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md).
 
 > [!CAUTION]
-> Я веду [Telegram-канал](https://t.me/podbal6ykbapb) и [Youtube-канал](https://www.youtube.com/@6yKBaPb-q9s). Скачивайте только из этого репозитория!
+> Я веду только [Youtube-канал](https://www.youtube.com/@6yKBaPb-q9s). Скачивайте только из этого репозитория!
 > Если вы решите сделать обзор на него, то оставляйте ссылку оригинальную!
 
 ## 📦 Описание
