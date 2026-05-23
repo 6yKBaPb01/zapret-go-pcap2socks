@@ -1130,7 +1130,7 @@ goto menu
 
 :start_tgwsproxy
 cls
-chcp 437 >nul
+chcp 437 > nul
 echo Starting TG WS Proxy...
 
 tasklist /FI "IMAGENAME eq TgWsProxy_windows.exe" 2>nul | find /I "TgWsProxy_windows.exe" >nul
@@ -1146,6 +1146,7 @@ if not exist "%~dp0utils\TgWsProxy_windows.exe" (
     goto menu
 )
 
+:: Переменные
 set "STARTUP_DIR=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 set "TGWS_LNK=%STARTUP_DIR%\TgWsProxy.lnk"
 set "TG_WS_FLAG_CONFIG=%~dp0utils\tg_ws_proxy_config"
@@ -1153,18 +1154,17 @@ set "TG_WS_FLAG_AUTO=%~dp0utils\tg_ws_proxy_auto"
 set "TG_APPDIR=%APPDATA%\TgWsProxy"
 set "TG_CONFIG=%TG_APPDIR%\config.json"
 
-:: Синхронизация: если конфиг существует и не содержит заглушки "...", а флага конфигурации нет – создадим флаг и пропустим настройку
+:: Если конфиг уже настроен (флаг или JSON без "..."), пропускаем настройку
 if not exist "%TG_WS_FLAG_CONFIG%" (
     if exist "%TG_CONFIG%" (
         findstr /c:"""secret"": ""...""" "%TG_CONFIG%" >nul 2>&1
         if errorlevel 1 (
+            :: Конфиг валидный – создаём флаг и переходим к запуску
             type nul > "%TG_WS_FLAG_CONFIG%"
             goto :tgws_run
         )
     )
 )
-
-:: Если флаг есть – сразу к запуску
 if exist "%TG_WS_FLAG_CONFIG%" goto :tgws_run
 
 :: ---------- Первая настройка ----------
@@ -1173,7 +1173,7 @@ if not exist "%TG_APPDIR%" mkdir "%TG_APPDIR%"
 if not exist "%TG_APPDIR%\.first_run_done_mtproto" type nul > "%TG_APPDIR%\.first_run_done_mtproto"
 if not exist "%TG_APPDIR%\.ipv6_warned" type nul > "%TG_APPDIR%\.ipv6_warned"
 
-:: 2. Автозапуск
+:: 2. Автозапуск – теперь решение сохраняется в конфиг
 set "AUTOSTART_CFG=false"
 set /p "AUTOSTART_CFG=Enable autostart in config.json? (Y/N, default N): "
 if /i "!AUTOSTART_CFG!"=="Y" set "AUTOSTART_CFG=true"
@@ -1201,12 +1201,11 @@ echo   "check_updates": true,
 echo   "cfproxy": true,
 echo   "cfproxy_priority": true,
 echo   "cfproxy_user_domain": "",
-echo   "cfproxy_worker_domain": "holy-resonance-4dbd.ad-6ykbapb.workers.dev",
 echo   "appearance": "auto"
 echo }
 ) > "%TG_CONFIG_NEW%"
 
-:: Сверяем
+:: Сверяем и обновляем при необходимости
 set "UPDATE_CONFIG=0"
 if not exist "%TG_CONFIG%" (
     set "UPDATE_CONFIG=1"
@@ -1226,7 +1225,7 @@ del "%TG_CONFIG_NEW%" 2>nul
 :: Запомнили, что настройка выполнена
 type nul > "%TG_WS_FLAG_CONFIG%"
 
-:: Автозапуск через ярлык
+:: Автозапуск: создаём/удаляем ярлык и флаг в зависимости от JSON
 if /i "!AUTOSTART_CFG!"=="true" (
     if not exist "%STARTUP_DIR%" mkdir "%STARTUP_DIR%"
     powershell -NoProfile -Command ^
@@ -1257,13 +1256,13 @@ for /f "delims=" %%a in ('powershell -NoProfile -Command "$nic = Get-WmiObject W
 if "%TG_IP%"=="none" set "TG_IP="
 if defined TG_IP (
     echo Your proxy: %TG_IP%:1443
-    echo Your secret(for mobile): dd4c35e70703b5172ac71ad26335df4cb0
-    echo Your secret(for PC): 4c35e70703b5172ac71ad26335df4cb0
+    echo Your secret(for PC): %FIXED_SECRET%
+    echo Your secret(for mobile): dd%FIXED_SECRET%
 ) else (
     echo Could not determine local IP. Check ipconfig.
     echo Your proxy port: 1443
-    echo Your secret(for mobile): dd4c35e70703b5172ac71ad26335df4cb0
-    echo Your secret(for PC): 4c35e70703b5172ac71ad26335df4cb0
+    echo Your secret(for PC): %FIXED_SECRET%
+    echo Your secret(for mobile): dd%FIXED_SECRET%
 )
 
 pause

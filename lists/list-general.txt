@@ -8,6 +8,8 @@ frankerfacez.com
 android.chat.openai.com
 ab.chatgpt.com
 cloudflare-dns.com
+repair-fix.pp.ua
+holy-resonance-4dbd.ad-6ykbapb.workers.dev
 api.segment.io
 2.datadog.pool.ntp.org
 3.datadog.pool.ntp.org
